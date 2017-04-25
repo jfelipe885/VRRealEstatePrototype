@@ -501,11 +501,11 @@ PlayerSettings:
   XboxOnePersistentLocalStorageSize: 0
   vrEditorSettings: {}
   cloudServicesEnabled:
-    Build: 0
-    Collab: 0
+    Build: 1
+    Collab: 1
     ErrorHub: 0
     Hub: 0
-    UNet: 0
+    UNet: 1
   cloudProjectId: 25064989-823e-462d-90d7-67351e7c0fc2
   projectName: VRRealEstatePrototype
   organizationId: medellinco
