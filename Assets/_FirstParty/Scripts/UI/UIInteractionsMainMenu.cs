@@ -10,8 +10,7 @@ public class UIInteractionsMainMenu : MonoBehaviour
   //===========================================================================
   public void OnButtonPressedEnterFloorPlan ()
   {
-    //TODO: JFR: 
-    Debug.LogWarning("TODO: LOAD SCENE FLOOR PLAN HERE");
+    SceneManager.LoadScene("FloorPlan");    
   }
 
   //===========================================================================
