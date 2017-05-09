@@ -1,7 +1,17 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
+<<<<<<< HEAD:Assets/ThirdParty/Chalet style furniture.meta
+guid: afe192d77ced45944a6475d9f0adfa84
+folderAsset: yes
+timeCreated: 1489431291
+=======
+guid: 875579eddce88ed4db71849510f49f16
+=======
 guid: 37ff77bd0ff12be4a84e80a154bc8f3f
+>>>>>>> upstream/master
 folderAsset: yes
 timeCreated: 1486606907
+>>>>>>> upstream/master:Assets/ThirdParty/Chalet style furniture.meta
 licenseType: Free
 DefaultImporter:
   userData: 
