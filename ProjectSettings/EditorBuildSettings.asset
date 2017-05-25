@@ -7,23 +7,34 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 0
     path: Assets/VRSampleScenes/Scenes/Intro.unity
+    guid: 00000000000000000000000000000000
   - enabled: 0
     path: Assets/VRSampleScenes/Scenes/MainMenu.unity
+    guid: 00000000000000000000000000000000
   - enabled: 0
     path: Assets/VRSampleScenes/Scenes/Maze.unity
+    guid: 00000000000000000000000000000000
   - enabled: 0
     path: Assets/VRSampleScenes/Scenes/Shooter360.unity
+    guid: 00000000000000000000000000000000
   - enabled: 0
     path: Assets/VRSampleScenes/Scenes/Flyer.unity
+    guid: 00000000000000000000000000000000
   - enabled: 0
     path: Assets/VRSampleScenes/Scenes/Shooter180.unity
+    guid: 00000000000000000000000000000000
   - enabled: 0
     path: Assets/_FirstParty/Scenes/MainMenu.unity
+    guid: 06c94bcd7e1842d45948d849be52b9ee
   - enabled: 1
     path: Assets/_FirstParty/Scenes/FloorPlan.unity
-  - enabled: 1
+    guid: d3822258732c1e345813a8290e77751b
+  - enabled: 0
     path: Assets/_FirstParty/Scenes/Main.unity
-  - enabled: 1
+    guid: 8722e401ab70e494d9d191af8b3d3607
+  - enabled: 0
     path: Assets/_FirstParty/Scenes/LoadMenu.unity
-  - enabled: 1
+    guid: f28385114a8eb894484bdeefb2dd4431
+  - enabled: 0
     path: Assets/_FirstParty/Scenes/OptionsMenu.unity
+    guid: b43ddad9a624de84ea75cf65c74e0c0d
