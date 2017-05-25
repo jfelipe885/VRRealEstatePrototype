@@ -1,14 +1,32 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿/*
+ * Copyright (c) 2016 Razeware LLC
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
 using UnityEngine;
 
 public class ControllerGrabObject : MonoBehaviour
 {
-
     private SteamVR_TrackedObject trackedObj;
-    // 1
+
     private GameObject collidingObject;
-    // 2
     private GameObject objectInHand;
 
     private SteamVR_Controller.Device Controller
@@ -18,57 +36,20 @@ public class ControllerGrabObject : MonoBehaviour
 
     void Awake()
     {
-        Debug.Log("***trackedObj: " + trackedObj.isValid);
         trackedObj = GetComponent<SteamVR_TrackedObject>();
     }
 
-    private void SetCollidingObject(Collider col)
-    {
-        // 1
-        if (collidingObject || !col.GetComponent<SteamVR_TrackedObject>())
-        {
-            return;
-        }
-        // 2
-        collidingObject = col.gameObject;
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        Debug.Log("***trackedObj: ");
-        // 1
-        if (Controller.GetHairTriggerDown())
-        {
-            if (collidingObject)
-            {
-                GrabObject();
-            }
-        }
-
-        // 2
-        if (Controller.GetHairTriggerUp())
-        {
-            if (objectInHand)
-            {
-                ReleaseObject();
-            }
-        }
-    }
-
-    // 1
     public void OnTriggerEnter(Collider other)
     {
         SetCollidingObject(other);
     }
 
-    // 2
     public void OnTriggerStay(Collider other)
     {
         SetCollidingObject(other);
     }
 
-    // 3
     public void OnTriggerExit(Collider other)
     {
         if (!collidingObject)
@@ -78,38 +59,62 @@ public class ControllerGrabObject : MonoBehaviour
 
         collidingObject = null;
     }
-    private void GrabObject()
+
+    private void SetCollidingObject(Collider col)
     {
-        // 1
-        objectInHand = collidingObject;
-        collidingObject = null;
-        // 2
-        var joint = AddFixedJoint();
-        joint.connectedBody = objectInHand.GetComponent<UnityEngine.Rigidbody>();
+        if (collidingObject || !col.GetComponent<Rigidbody>())
+        {
+            return;
+        }
+
+        collidingObject = col.gameObject;
     }
 
-    // 3
+    void Update()
+    {
+        if (Controller.GetHairTriggerDown())
+        {
+            if (collidingObject)
+            {
+                GrabObject();
+            }
+        }
+
+        if (Controller.GetHairTriggerUp())
+        {
+            if (objectInHand)
+            {
+                ReleaseObject();
+            }
+        }
+    }
+
+    private void GrabObject()
+    {
+        objectInHand = collidingObject;
+        collidingObject = null;
+        var joint = AddFixedJoint();
+        joint.connectedBody = objectInHand.GetComponent<Rigidbody>();
+    }
+
     private FixedJoint AddFixedJoint()
     {
-        FixedJoint fx = gameObject.AddComponent<UnityEngine.FixedJoint>();
+        FixedJoint fx = gameObject.AddComponent<FixedJoint>();
         fx.breakForce = 20000;
         fx.breakTorque = 20000;
         return fx;
     }
+
     private void ReleaseObject()
     {
-        // 1
-        if (GetComponent<SteamVR_TrackedObject>())
+        if (GetComponent<FixedJoint>())
         {
-            // 2
-            GetComponent<UnityEngine.FixedJoint>().connectedBody = null;
-            Destroy(GetComponent<UnityEngine.Rigidbody>());
-            // 3
-            objectInHand.GetComponent<UnityEngine.Rigidbody>().velocity = Controller.velocity;
-            objectInHand.GetComponent<UnityEngine.Rigidbody>().angularVelocity = Controller.angularVelocity;
+            GetComponent<FixedJoint>().connectedBody = null;
+            Destroy(GetComponent<FixedJoint>());
+            objectInHand.GetComponent<Rigidbody>().velocity = Controller.velocity;
+            objectInHand.GetComponent<Rigidbody>().angularVelocity = Controller.angularVelocity;
         }
-        // 4
+
         objectInHand = null;
     }
 }
-

@@ -12,13 +12,11 @@ public class ViveControllerInputTest : MonoBehaviour
     }
     void Awake()
     {
-        Debug.Log("***trackedObj: " + trackedObj.isValid);
         trackedObj = GetComponent<SteamVR_TrackedObject>();
     }
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("***Device");
         // 1
         if (Controller.GetAxis() != Vector2.zero)
         {
