@@ -70,4 +70,7 @@ public class VRDeviceManager : MonoBehaviour
   }
 
   // Update is called once per frame
+  //private void Update()
+  //{
+  //}
 }
