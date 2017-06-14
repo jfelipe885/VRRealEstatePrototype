@@ -89,7 +89,8 @@ namespace VRTK
                 canvasRigidBody.isKinematic = true;
             }
 
-            CreateDraggablePanel(canvas, canvasSize);
+            //JFR: TODO: 6/14/2017 Creating draggable panels seem to be destroying our box colliders. Need to look further in the future why.
+            //CreateDraggablePanel(canvas, canvasSize);
             CreateActivator(canvas, canvasSize);
         }
 
