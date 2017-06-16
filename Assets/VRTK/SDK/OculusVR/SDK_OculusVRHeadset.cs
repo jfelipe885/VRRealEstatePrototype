@@ -21,7 +21,7 @@ namespace VRTK
                 var ovrManager = FindObjectOfType<OVRManager>();
                 if (ovrManager)
                 {
-                    cachedHeadset = ovrManager.transform.FindChild("TrackingSpace/CenterEyeAnchor");
+                    cachedHeadset = ovrManager.transform.Find("TrackingSpace/CenterEyeAnchor");
                 }
             }
             return cachedHeadset;

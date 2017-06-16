@@ -10,7 +10,8 @@ public class UIInteractionsMainMenu : MonoBehaviour
   //===========================================================================
   public void OnButtonPressedEnterFloorPlan ()
   {
-    SceneManager.LoadScene("FloorPlan");    
+    Debug.LogWarning("Options Button Pressed");
+    SceneManager.LoadScene("FloorPlan");
   }
 
   //===========================================================================
