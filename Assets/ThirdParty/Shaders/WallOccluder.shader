@@ -1,4 +1,7 @@
-﻿Shader "ThirdParty/WallOccluder" 
+﻿
+//https://forum.unity3d.com/threads/resolved-trying-to-make-holes-in-walls-with-stencil-buffer-shaders.429746/
+
+Shader "ThirdParty/WallOccluder" 
 {
   Category
   {

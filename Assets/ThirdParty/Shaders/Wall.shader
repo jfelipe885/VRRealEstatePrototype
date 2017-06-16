@@ -1,4 +1,6 @@
 ﻿
+//https://forum.unity3d.com/threads/resolved-trying-to-make-holes-in-walls-with-stencil-buffer-shaders.429746/
+
 Shader "ThirdParty/Wall" {
   Properties{
     _Color("Main Color", Color) = (1,1,1,1)
