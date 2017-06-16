@@ -60,8 +60,8 @@ Material:
     - _MoonShadowPosX: 0.025
     - _MoonShadowPosY: -0.11
     - _MoonShadowSize: 0.115
-    - _SunSize: 0.07
+    - _SunSize: 0.05
     m_Colors:
     - _CloudsParams: {r: 2, g: 8, b: 3.62, a: 0.54}
-    - _GroundColor: {r: 0.412, g: 0.384, b: 0.365, a: 1}
-    - _SkyTint: {r: 0, g: 0, b: 0, a: 0}
+    - _GroundColor: {r: 0.375, g: 0.375, b: 0.375, a: 1}
+    - _SkyTint: {r: 0, g: 0.29513198, b: 0.44117647, a: 1}
