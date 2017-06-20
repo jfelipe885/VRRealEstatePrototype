@@ -108,7 +108,8 @@ namespace VRTK
                 canvasRigidBody.isKinematic = true;
             }
 
-            CreateDraggablePanel(canvas, canvasSize);
+            //TODO: JFR: 6/20/2017 for whatever reason when we create the dragable panel. it removes our colliders. Need to figure it out later.
+            //CreateDraggablePanel(canvas, canvasSize);
             CreateActivator(canvas, canvasSize);
         }
 
