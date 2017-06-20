@@ -905,6 +905,23 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.97, y: 1.73, z: 0.96}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &435151727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 435151725}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c08517e04830d6d44a13c5ea5f574181, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  active: 1
+  unhighlightOnDisable: 1
+  thickness: 5
+  customOutlineModels: []
+  customOutlineModelPaths: []
+  enableSubmeshHighlight: 0
 --- !u!1 &472721789
 GameObject:
   m_ObjectHideFlags: 0
@@ -2510,7 +2527,14 @@ Prefab:
       propertyPath: modelAliasRightController
       value: 
       objectReference: {fileID: 2072339491}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 114537784440575920, guid: 692004d8385c3e249890836bc8093625, type: 2}
+    - {fileID: 114173087382522616, guid: 692004d8385c3e249890836bc8093625, type: 2}
+    - {fileID: 114552044105384778, guid: 692004d8385c3e249890836bc8093625, type: 2}
+    - {fileID: 114800494760754756, guid: 692004d8385c3e249890836bc8093625, type: 2}
+    - {fileID: 114558452929507382, guid: 692004d8385c3e249890836bc8093625, type: 2}
+    - {fileID: 114847421266808628, guid: 692004d8385c3e249890836bc8093625, type: 2}
+    - {fileID: 114403593628065972, guid: 692004d8385c3e249890836bc8093625, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 692004d8385c3e249890836bc8093625, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &1039914377

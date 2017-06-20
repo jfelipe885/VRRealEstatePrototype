@@ -37,7 +37,7 @@
         protected override void Awake()
         {
             base.Awake();
-            waterSpray = transform.Find("WaterSpray").gameObject;
+            waterSpray = transform.FindChild("WaterSpray").gameObject;
             particles = waterSpray.GetComponent<ParticleSystem>();
             particles.Stop();
         }
