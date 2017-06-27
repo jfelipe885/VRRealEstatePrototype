@@ -182,7 +182,7 @@ public class TerrainUtils : MonoBehaviour
         }
         */
 
-        float[,,] alph = d.GetAlphamaps(0, 0, d.alphamapResolution, d.alphamapResolution);
+        //float[,,] alph = d.GetAlphamaps(0, 0, d.alphamapResolution, d.alphamapResolution);
 
         int splatCount = d.splatPrototypes.Length;
 
@@ -472,7 +472,7 @@ public class TerrainUtils : MonoBehaviour
         }
 
         cellCount = (int)(tSize.x) / cellSize;
-        float halfSize = cellSize / 2.0f;
+        //float halfSize = cellSize / 2.0f;
 
         BoxCollider[,] cellsBox = new BoxCollider[cellCount, cellCount];
         SphereCollider[,] cellsSphere = new SphereCollider[cellCount, cellCount];

@@ -192,7 +192,7 @@ MonoBehaviour:
   activationButton: 10
   holdButtonToActivate: 1
   activationDelay: 0
-  selectionButton: 10
+  selectionButton: 0
   selectOnPress: 0
   interactWithObjects: 0
   grabToPointerTip: 0
@@ -222,10 +222,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enableTeleport: 0
   pointerRenderer: {fileID: 1566205086}
-  activationButton: 10
+  activationButton: 0
   holdButtonToActivate: 0
   activationDelay: 0
-  selectionButton: 10
+  selectionButton: 7
   selectOnPress: 0
   interactWithObjects: 0
   grabToPointerTip: 0
@@ -3039,58 +3039,10 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 84c8b8609f9bb434eaf5248f17ff1293, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &772846030 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 158226, guid: 84c8b8609f9bb434eaf5248f17ff1293, type: 2}
-  m_PrefabInternal: {fileID: 772846029}
---- !u!114 &772846031
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 772846030}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b3f12b92f9bfb84e99e6e4c57fa51d8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &772846032 stripped
 Transform:
   m_PrefabParentObject: {fileID: 463470, guid: 84c8b8609f9bb434eaf5248f17ff1293, type: 2}
   m_PrefabInternal: {fileID: 772846029}
---- !u!114 &772846036
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 772846030}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b3f12b92f9bfb84e99e6e4c57fa51d8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &772846037
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 772846030}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b3f12b92f9bfb84e99e6e4c57fa51d8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &772846038
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 772846030}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b3f12b92f9bfb84e99e6e4c57fa51d8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &774857741 stripped
 Transform:
   m_PrefabParentObject: {fileID: 481256, guid: 8b2d47fdc2e25ac4f9721480a68bbefa, type: 2}
@@ -3217,7 +3169,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!23 &865314607
 MeshRenderer:
   m_ObjectHideFlags: 0

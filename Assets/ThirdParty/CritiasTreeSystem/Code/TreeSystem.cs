@@ -619,7 +619,7 @@ public class TreeSystem : MonoBehaviour
                 lod[i].CopyBlock();
         }
 
-        float x, y, z;
+        //float x, y, z;
 
         float treeDistSqr = m_Settings.m_MaxTreeDistance * m_Settings.m_MaxTreeDistance;
         float shadowDistSqr = m_Settings.m_ShadowDrawDistance * m_Settings.m_ShadowDrawDistance;
