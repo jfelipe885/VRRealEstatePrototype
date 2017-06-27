@@ -710,9 +710,17 @@ namespace VRTK
                 return;
             }
 
-            int lastFrameIsInBudget = interleavedReprojectionEnabled || VRStats.gpuTimeLastFrame > singleFrameDurationInMilliseconds
+            //JFR: 6/27/2017 Start getting rid of obsolete call ...
+            float last_time_frame = 0.0f;
+            VRStats.TryGetGPUTimeLastFrame(out last_time_frame);
+            int lastFrameIsInBudget = interleavedReprojectionEnabled || last_time_frame > singleFrameDurationInMilliseconds
                                       ? 0
                                       : 1;
+
+            //int lastFrameIsInBudget = interleavedReprojectionEnabled || VRStats.gpuTimeLastFrame > singleFrameDurationInMilliseconds
+            //                          ? 0
+            //                          : 1;
+            //...END JFR 
 
             debugVisualizationQuadMaterial.SetInt(ShaderPropertyIDs.RenderScaleLevelsCount, allRenderScales.Count);
             debugVisualizationQuadMaterial.SetInt(ShaderPropertyIDs.DefaultRenderViewportScaleLevel, defaultRenderViewportScaleLevel);
@@ -801,7 +809,12 @@ namespace VRTK
             public void SaveCurrentFrameTiming()
             {
                 bufferIndex = (bufferIndex + 1) % buffer.Length;
-                buffer[bufferIndex] = VRStats.gpuTimeLastFrame;
+                //JFR: 6/27/2017 getting rid of obsolete call ...
+                float time_last_frame = 0.0f;
+                VRStats.TryGetGPUTimeLastFrame(out time_last_frame);
+                buffer[bufferIndex] = time_last_frame;
+                //buffer[bufferIndex] = VRStats.gpuTimeLastFrame;
+                //...JFR END
             }
 
             public float GetFrameTiming(int framesAgo)
