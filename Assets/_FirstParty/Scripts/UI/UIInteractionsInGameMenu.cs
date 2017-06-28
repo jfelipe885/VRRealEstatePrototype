@@ -7,12 +7,13 @@ using UnityEngine.UI;
 
 public class UIInteractionsInGameMenu : MonoBehaviour
 {
-  [SerializeField]
-  private TimeOfDayManager _timeOfDayManager = null;
+  //Constructors(in descending order of complexity)
 
-  [SerializeField]
-  private Slider _timeOfDaySlider = null;
+  //public constants
 
+  //properties
+
+  //public methods
   //===========================================================================
   public void OnButtonMainMenu ()
   {
@@ -20,7 +21,7 @@ public class UIInteractionsInGameMenu : MonoBehaviour
   }
 
   //===========================================================================
-  public void OnTimeOfDaySliderChange (float value)
+  public void OnSliderTimeOfDayChange (float value)
   {
     if (_timeOfDaySlider == null)
     {
@@ -32,4 +33,22 @@ public class UIInteractionsInGameMenu : MonoBehaviour
     }
     _timeOfDayManager.timeline = _timeOfDaySlider.value;
   }
+
+  //===========================================================================
+  public void OnButtonEdit ()
+  {
+    MenuManager.Instance.HideInGameMenu();
+    MenuManager.Instance.EnterMenuMode(MenuManager.MenuMode.ContextSensitive);    
+  }
+ 
+  //protected methods
+  //private methods
+  //protected fields
+
+  //private fields
+  [SerializeField]
+  private TimeOfDayManager _timeOfDayManager = null;
+
+  [SerializeField]
+  private Slider _timeOfDaySlider = null;
 }

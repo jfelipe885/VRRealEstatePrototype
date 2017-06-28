@@ -1,35 +1,93 @@
-﻿
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.UI;
+using VRTK;
 
 public class MenuManager : Singleton<MenuManager>
 {
   //Constructors(in descending order of complexity)
+  //===========================================================================
+  public void Awake()
+  {
+    if (_interactTouch != null)
+    {
+      _interactTouch.ControllerTouchInteractableObject += OnTouchEventHandler;
+      _interactTouch.ControllerUntouchInteractableObject += OnUnTouchEventHandler;
+    }
+    
+    //TODO: JFR: these need to be localized.    
+    _modeText[(int)MenuMode.InGameMenu] = "";
+    _modeText[(int)MenuMode.ContextSensitive] = "Editing Mode";
+  }
 
-  //public constants
+  public enum MenuMode
+  {
+    InGameMenu = 0,
+    ContextSensitive,
+    NumMenuModes,
+  }
 
   //properties
+  //===================================
+  public MenuMode CurrentMenuMode
+  {
+    get { return _currentMenuMode; }
+    private set { _currentMenuMode = value; }
+  }
 
   //public methods
+  //===========================================================================
+  public void EnterMenuMode(MenuMode newMode)
+  {
+    CurrentMenuMode = newMode;
+    _currentModeText.text = _modeText[(int)newMode];
+  }
+
+  //===========================================================================
+  public void HandleShowMenu()
+  {
+    switch (CurrentMenuMode)
+    {
+      case MenuMode.InGameMenu:
+        ShowInGameMenu();
+        break;
+
+      case MenuMode.ContextSensitive:
+        ShowContextSensitiveMenu();
+        break;
+    }
+  }
+
+  //===========================================================================
+  public void HandleHideMenu()
+  {
+    HideInGameMenu();
+    HideContextSensitiveMenu();
+  }
+
   //===========================================================================
   public void ShowInGameMenu()
   {
     if (_camera == null)
     {
+      Debug.LogError("ShowInGameMenu () _camera is null");
       return;
     }
 
     if (_inGameMenu == null)
     {
+      Debug.LogError("ShowInGameMenu () _inGameMenu is null");
       return;
     }
 
     //get the camera forward vector
-    _inGameMenu.transform.position = _camera.transform.position + (_camera.transform.forward * _distanceToMenu);
-    _inGameMenu.transform.position += (-_inGameMenu.transform.up * _yOffset);
-    _inGameMenu.transform.LookAt(_inGameMenu.transform.position + (_camera.transform.forward * _distanceToMenu));
-    if (_inGameMenu != null)
+    _inGameMenu.transform.position = _camera.transform.position + (_camera.transform.forward * _distanceToInGameMenu);
+    _inGameMenu.transform.position += (-_inGameMenu.transform.up * _yOffsetInGameMenu);
+    _inGameMenu.transform.LookAt(_inGameMenu.transform.position + (_camera.transform.forward * _distanceToInGameMenu));
+    _inGameMenu.SetActive(true);
+
+    if (_currentModeText != null)
     {
-      _inGameMenu.SetActive(true);
+      _currentModeText.text = "";
     }
   }
 
@@ -42,8 +100,50 @@ public class MenuManager : Singleton<MenuManager>
     }
   }
 
+  //===========================================================================
+  public void ShowContextSensitiveMenu()
+  {
+    if (_contextSensitiveMenu == null)
+    {
+      return;
+    }
+
+    if (_currentInteractableObject == null)
+    {
+      return;
+    }
+
+    //let's set up the menu along the vector between the camera and the object
+    Vector3 cameraToObjectVector = (_currentInteractableObject.transform.position - _camera.transform.position);
+    _contextSensitiveMenu.transform.position = _camera.transform.position + cameraToObjectVector * 0.5f;
+    _contextSensitiveMenu.SetActive(true);
+  }
+
+  //===========================================================================
+  public void HideContextSensitiveMenu()
+  {
+    if (_contextSensitiveMenu != null)
+    {
+      _contextSensitiveMenu.SetActive(false);
+    }
+  }
+
   //protected methods
   //private methods
+  //===========================================================================
+  private void OnTouchEventHandler(object sender, ObjectInteractEventArgs e)
+  {
+    _currentInteractableObject = e.target;
+    return;
+  }
+
+  //===========================================================================
+  private void OnUnTouchEventHandler(object sender, ObjectInteractEventArgs e)
+  {
+    _currentInteractableObject = null;
+    return;
+  }
+
   //protected fields
 
   //private fields
@@ -51,11 +151,26 @@ public class MenuManager : Singleton<MenuManager>
   private GameObject _inGameMenu = null;
 
   [SerializeField]
+  private GameObject _contextSensitiveMenu = null;
+
+  [SerializeField]
   private GameObject _camera = null;
 
   [SerializeField]
-  private float _distanceToMenu = 3.0f; //meters?
+  private VRTK_InteractTouch _interactTouch = null;
 
   [SerializeField]
-  private float _yOffset = 0.1f;
+  private float _distanceToInGameMenu = 0.5f; //meters?
+
+  [SerializeField]
+  private float _yOffsetInGameMenu = 0.1f;
+
+  [SerializeField]
+  private Text _currentModeText = null;
+
+  private GameObject _currentInteractableObject = null;
+
+  private MenuMode _currentMenuMode = MenuMode.InGameMenu;
+
+  private string[] _modeText = new string[(int)MenuMode.NumMenuModes];
 }

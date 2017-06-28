@@ -123,13 +123,17 @@ public class ControllerEventListener : MonoBehaviour
   private void DoGripPressed(object sender, ControllerInteractionEventArgs e)
   {
     DebugLogger(e.controllerIndex, "GRIP", "pressed", e);
-    MenuManager.Instance.ShowInGameMenu();
+    MenuManager.Instance.HandleShowMenu();
+    //MenuManager.Instance.ShowInGameMenu();
+    //MenuManager.Instance.ShowContextSensitiveMenu();
   }
 
   private void DoGripReleased(object sender, ControllerInteractionEventArgs e)
   {
     DebugLogger(e.controllerIndex, "GRIP", "released", e);
-    MenuManager.Instance.HideInGameMenu();
+    MenuManager.Instance.HandleHideMenu();
+    //MenuManager.Instance.HideInGameMenu();
+    //MenuManager.Instance.HideContextSensitiveMenu();
   }
 
   private void DoGripTouchStart(object sender, ControllerInteractionEventArgs e)
