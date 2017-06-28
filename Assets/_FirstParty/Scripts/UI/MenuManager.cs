@@ -19,6 +19,12 @@ public class MenuManager : Singleton<MenuManager>
     _modeText[(int)MenuMode.ContextSensitive] = "Editing Mode";
   }
 
+  //===========================================================================
+  public void Start ()
+  {
+    EnterMenuMode(MenuMode.InGameMenu);
+  }
+
   public enum MenuMode
   {
     InGameMenu = 0,
@@ -38,8 +44,16 @@ public class MenuManager : Singleton<MenuManager>
   //===========================================================================
   public void EnterMenuMode(MenuMode newMode)
   {
+    if (_intearctPointer == null)
+    {
+      Debug.LogError("EnterMenuMode, _intearctPointer is null");
+      return;
+    }
+
     CurrentMenuMode = newMode;
     _currentModeText.text = _modeText[(int)newMode];
+
+    _intearctPointer.interactWithObjects = (newMode == MenuMode.ContextSensitive);
   }
 
   //===========================================================================
@@ -107,7 +121,6 @@ public class MenuManager : Singleton<MenuManager>
     {
       return;
     }
-
     if (_currentInteractableObject == null)
     {
       return;
@@ -115,16 +128,39 @@ public class MenuManager : Singleton<MenuManager>
 
     //let's set up the menu along the vector between the camera and the object
     Vector3 cameraToObjectVector = (_currentInteractableObject.transform.position - _camera.transform.position);
-    _contextSensitiveMenu.transform.position = _camera.transform.position + cameraToObjectVector * 0.5f;
+    _contextSensitiveMenu.transform.position = _camera.transform.position + cameraToObjectVector * _distanceToContextSensitiveMenu;
+    //_contextSensitiveMenu.transform.LookAt(_camera.transform.position);
+    _contextSensitiveMenu.transform.LookAt(_currentInteractableObject.transform.position);
     _contextSensitiveMenu.SetActive(true);
+
+    RM2_InteractableObject interactable = _currentInteractableObject.GetComponent<RM2_InteractableObject>();
+    if (interactable != null)
+    {
+      interactable.ForceHightLight = true;
+    }
   }
 
   //===========================================================================
   public void HideContextSensitiveMenu()
   {
-    if (_contextSensitiveMenu != null)
+    if (_contextSensitiveMenu == null)
     {
-      _contextSensitiveMenu.SetActive(false);
+      Debug.LogError("HideContextSensitiveMenu() _contextSensitiveMenu == null");
+      return;
+    }
+    if (_currentInteractableObject == null)
+    {
+      Debug.LogError("HideContextSensitiveMenu() _currentInteractableObject == null");
+      return;
+    }
+
+    _contextSensitiveMenu.SetActive(false);    
+    RM2_InteractableObject interactable = _currentInteractableObject.GetComponent<RM2_InteractableObject>();
+    if (interactable != null)
+    {
+      interactable.StopTouching(null);
+      interactable.ForceHightLight = false;
+      interactable.ToggleHighlight(false);
     }
   }
 
@@ -140,7 +176,7 @@ public class MenuManager : Singleton<MenuManager>
   //===========================================================================
   private void OnUnTouchEventHandler(object sender, ObjectInteractEventArgs e)
   {
-    _currentInteractableObject = null;
+    //_currentInteractableObject = null;
     return;
   }
 
@@ -166,7 +202,16 @@ public class MenuManager : Singleton<MenuManager>
   private float _yOffsetInGameMenu = 0.1f;
 
   [SerializeField]
+  private float _distanceToContextSensitiveMenu = 0.25f; //meters?
+
+  [SerializeField]
+  private float _yOffsetContextSensitiveMenu = 0.1f;
+
+  [SerializeField]
   private Text _currentModeText = null;
+
+  [SerializeField]
+  private VRTK_Pointer _intearctPointer = null;
 
   private GameObject _currentInteractableObject = null;
 
