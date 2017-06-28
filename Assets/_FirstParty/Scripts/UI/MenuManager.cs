@@ -148,13 +148,13 @@ public class MenuManager : Singleton<MenuManager>
       Debug.LogError("HideContextSensitiveMenu() _contextSensitiveMenu == null");
       return;
     }
+    _contextSensitiveMenu.SetActive(false);
+
     if (_currentInteractableObject == null)
     {
       Debug.LogError("HideContextSensitiveMenu() _currentInteractableObject == null");
       return;
-    }
-
-    _contextSensitiveMenu.SetActive(false);    
+    }    
     RM2_InteractableObject interactable = _currentInteractableObject.GetComponent<RM2_InteractableObject>();
     if (interactable != null)
     {
