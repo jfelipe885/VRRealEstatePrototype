@@ -16,11 +16,19 @@ public class UIInteractionsContextSensitiveMenu : MonoBehaviour
   //===========================================================================
   public void OnButtonRemove ()
   {
+
   }
 
   //===========================================================================
   public void OnChangeColor ()
   {
+
+  }
+
+  //===========================================================================
+  public void OnButtonSwap ()
+  {
+
   }
 
   //protected methods

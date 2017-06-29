@@ -68,7 +68,7 @@ public class MenuManager : Singleton<MenuManager>
         break;
 
       case MenuMode.ContextSensitive:
-        ShowContextSensitiveMenu();
+        ShowEditModeMenu();
         break;
 
       case MenuMode.AddFurniture:
@@ -81,7 +81,7 @@ public class MenuManager : Singleton<MenuManager>
   public void HandleHideMenu ()
   {
     HideInGameMenu();
-    HideContextSensitiveMenu();
+    HideEditModeMenu();
     HideAddFurnitureMenu();
   }
 
@@ -117,10 +117,11 @@ public class MenuManager : Singleton<MenuManager>
   }
 
   //===========================================================================
-  public void ShowContextSensitiveMenu ()
+  public void ShowEditModeMenu ()
   {
-    if (_contextSensitiveMenu == null)
+    if (_editMenu == null)
     {
+      Debug.LogError("ShowEditModeMenu () _editMenu == null");
       return;
     }
     if (_currentInteractableObject == null)
@@ -130,27 +131,27 @@ public class MenuManager : Singleton<MenuManager>
 
     //let's set up the menu along the vector between the camera and the object
     Vector3 cameraToObjectVector = (_currentInteractableObject.transform.position - _camera.transform.position);
-    _contextSensitiveMenu.transform.position = _camera.transform.position + cameraToObjectVector * _distanceToContextSensitiveMenu;
-    //_contextSensitiveMenu.transform.LookAt(_camera.transform.position);
-    _contextSensitiveMenu.transform.LookAt(_currentInteractableObject.transform.position);
-    _contextSensitiveMenu.SetActive(true);
+    _editMenu.transform.position = _camera.transform.position + cameraToObjectVector * _distanceToContextSensitiveMenu;    
+    _editMenu.transform.LookAt(_currentInteractableObject.transform.position);
+    _editMenu.gameObject.SetActive(true);
 
     RM2_InteractableObject interactable = _currentInteractableObject.GetComponent<RM2_InteractableObject>();
     if (interactable != null)
     {
       interactable.ForceHightLight = true;
+      _editMenu.SetUpButtons(interactable);
     }
   }
 
   //===========================================================================
-  public void HideContextSensitiveMenu ()
+  public void HideEditModeMenu ()
   {
-    if (_contextSensitiveMenu == null)
+    if (_editMenu == null)
     {
       Debug.LogError("HideContextSensitiveMenu() _contextSensitiveMenu == null");
       return;
     }
-    _contextSensitiveMenu.SetActive(false);
+    _editMenu.gameObject.SetActive(false);
 
     if (_currentInteractableObject == null)
     {
@@ -219,7 +220,7 @@ public class MenuManager : Singleton<MenuManager>
   private GameObject _inGameMenu = null;
 
   [SerializeField]
-  private GameObject _contextSensitiveMenu = null;
+  private EditModeMenu _editMenu = null;
 
   [SerializeField]
   private GameObject _addFurnitureMenu = null;
