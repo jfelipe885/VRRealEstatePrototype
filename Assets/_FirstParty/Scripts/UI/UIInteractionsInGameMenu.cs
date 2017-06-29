@@ -44,6 +44,7 @@ public class UIInteractionsInGameMenu : MonoBehaviour
   {
     MenuManager.Instance.HideInGameMenu();
     MenuManager.Instance.EnterMenuMode(MenuManager.MenuMode.AddFurniture);
+    MenuManager.Instance.HandleShowMenu();
   }
 
   //protected methods

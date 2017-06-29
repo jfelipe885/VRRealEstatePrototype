@@ -6,7 +6,7 @@ public class MenuManager : Singleton<MenuManager>
 {
   //Constructors(in descending order of complexity)
   //===========================================================================
-  public void Awake()
+  public void Awake ()
   {
     if (_interactTouch != null)
     {
@@ -21,7 +21,7 @@ public class MenuManager : Singleton<MenuManager>
   }
 
   //===========================================================================
-  public void Start()
+  public void Start ()
   {
     EnterMenuMode(MenuMode.InGameMenu);
   }
@@ -44,7 +44,7 @@ public class MenuManager : Singleton<MenuManager>
 
   //public methods
   //===========================================================================
-  public void EnterMenuMode(MenuMode newMode)
+  public void EnterMenuMode (MenuMode newMode)
   {
     if (_intearctPointer == null)
     {
@@ -59,7 +59,7 @@ public class MenuManager : Singleton<MenuManager>
   }
 
   //===========================================================================
-  public void HandleShowMenu()
+  public void HandleShowMenu ()
   {
     switch (CurrentMenuMode)
     {
@@ -78,7 +78,7 @@ public class MenuManager : Singleton<MenuManager>
   }
 
   //===========================================================================
-  public void HandleHideMenu()
+  public void HandleHideMenu ()
   {
     HideInGameMenu();
     HideContextSensitiveMenu();
@@ -86,7 +86,7 @@ public class MenuManager : Singleton<MenuManager>
   }
 
   //===========================================================================
-  public void ShowInGameMenu()
+  public void ShowInGameMenu ()
   {
     if (_camera == null)
     {
@@ -108,7 +108,7 @@ public class MenuManager : Singleton<MenuManager>
   }
 
   //===========================================================================
-  public void HideInGameMenu()
+  public void HideInGameMenu ()
   {
     if (_inGameMenu != null)
     {
@@ -117,7 +117,7 @@ public class MenuManager : Singleton<MenuManager>
   }
 
   //===========================================================================
-  public void ShowContextSensitiveMenu()
+  public void ShowContextSensitiveMenu ()
   {
     if (_contextSensitiveMenu == null)
     {
@@ -143,7 +143,7 @@ public class MenuManager : Singleton<MenuManager>
   }
 
   //===========================================================================
-  public void HideContextSensitiveMenu()
+  public void HideContextSensitiveMenu ()
   {
     if (_contextSensitiveMenu == null)
     {
@@ -166,7 +166,7 @@ public class MenuManager : Singleton<MenuManager>
   }
 
   //===========================================================================
-  public void ShowAddFurnitureMenu()
+  public void ShowAddFurnitureMenu ()
   {
     if (_camera == null)
     {
@@ -188,7 +188,7 @@ public class MenuManager : Singleton<MenuManager>
   }
 
   //===========================================================================
-  public void HideAddFurnitureMenu()
+  public void HideAddFurnitureMenu ()
   {
     if (_addFurnitureMenu != null)
     {
@@ -199,14 +199,14 @@ public class MenuManager : Singleton<MenuManager>
   //protected methods
   //private methods
   //===========================================================================
-  private void OnTouchEventHandler(object sender, ObjectInteractEventArgs e)
+  private void OnTouchEventHandler (object sender, ObjectInteractEventArgs e)
   {
     _currentInteractableObject = e.target;
     return;
   }
 
   //===========================================================================
-  private void OnUnTouchEventHandler(object sender, ObjectInteractEventArgs e)
+  private void OnUnTouchEventHandler (object sender, ObjectInteractEventArgs e)
   {
     //_currentInteractableObject = null;
     return;
