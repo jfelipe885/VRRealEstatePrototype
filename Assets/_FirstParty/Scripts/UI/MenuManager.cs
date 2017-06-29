@@ -16,7 +16,7 @@ public class MenuManager : Singleton<MenuManager>
 
     //TODO: JFR: these need to be localized.
     _modeText[(int)MenuMode.InGameMenu] = "";
-    _modeText[(int)MenuMode.ContextSensitive] = "Editing Mode";
+    _modeText[(int)MenuMode.EditMode] = "Editing Mode";
     _modeText[(int)MenuMode.AddFurniture] = "Add Furniture Mode";
   }
 
@@ -29,7 +29,7 @@ public class MenuManager : Singleton<MenuManager>
   public enum MenuMode
   {
     InGameMenu = 0,
-    ContextSensitive,
+    EditMode,
     AddFurniture,
     NumMenuModes,
   }
@@ -55,7 +55,7 @@ public class MenuManager : Singleton<MenuManager>
     CurrentMenuMode = newMode;
     _currentModeText.text = _modeText[(int)newMode];
 
-    _intearctPointer.interactWithObjects = (newMode == MenuMode.ContextSensitive);
+    _intearctPointer.interactWithObjects = (newMode == MenuMode.EditMode);
   }
 
   //===========================================================================
@@ -67,7 +67,7 @@ public class MenuManager : Singleton<MenuManager>
         ShowInGameMenu();
         break;
 
-      case MenuMode.ContextSensitive:
+      case MenuMode.EditMode:
         ShowEditModeMenu();
         break;
 
@@ -131,7 +131,7 @@ public class MenuManager : Singleton<MenuManager>
 
     //let's set up the menu along the vector between the camera and the object
     Vector3 cameraToObjectVector = (_currentInteractableObject.transform.position - _camera.transform.position);
-    _editMenu.transform.position = _camera.transform.position + cameraToObjectVector * _distanceToContextSensitiveMenu;    
+    _editMenu.transform.position = _camera.transform.position + cameraToObjectVector * _distanceToEditModeMenu;    
     _editMenu.transform.LookAt(_currentInteractableObject.transform.position);
     _editMenu.gameObject.SetActive(true);
 
@@ -148,7 +148,7 @@ public class MenuManager : Singleton<MenuManager>
   {
     if (_editMenu == null)
     {
-      Debug.LogError("HideContextSensitiveMenu() _contextSensitiveMenu == null");
+      Debug.LogError("HideEditModeMenu() _editMenu == null");
       return;
     }
     _editMenu.gameObject.SetActive(false);
@@ -238,10 +238,10 @@ public class MenuManager : Singleton<MenuManager>
   private float _yOffsetInGameMenu = 0.1f;
 
   [SerializeField]
-  private float _distanceToContextSensitiveMenu = 0.25f; //meters?
+  private float _distanceToEditModeMenu = 0.25f; //meters?
 
   [SerializeField]
-  private float _yOffsetContextSensitiveMenu = 0.1f;
+  private float _yOffsetEditModeMenu = 0.1f;
 
   [SerializeField]
   private Text _currentModeText = null;

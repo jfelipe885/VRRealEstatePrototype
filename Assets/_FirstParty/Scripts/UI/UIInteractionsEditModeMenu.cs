@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class UIInteractionsContextSensitiveMenu : MonoBehaviour
+public class UIInteractionsEditModeMenu : MonoBehaviour
 {
   //Constructors(in descending order of complexity)
   //public constants
