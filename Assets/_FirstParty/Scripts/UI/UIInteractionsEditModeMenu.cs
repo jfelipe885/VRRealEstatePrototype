@@ -16,7 +16,14 @@ public class UIInteractionsEditModeMenu : MonoBehaviour
   //===========================================================================
   public void OnButtonRemove ()
   {
+    GameObject currentInteractable = MenuManager.Instance.CurrentInteractable;
+    if (currentInteractable == null)
+    {
+      return;
+    }
 
+    Destroy(currentInteractable);
+    MenuManager.Instance.HandleHideMenu();
   }
 
   //===========================================================================

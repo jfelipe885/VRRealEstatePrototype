@@ -42,6 +42,13 @@ public class MenuManager : Singleton<MenuManager>
     private set { _currentMenuMode = value; }
   }
 
+  //===================================
+  public GameObject CurrentInteractable
+  {
+    get { return _currentInteractableObject; }
+    private set { _currentInteractableObject = value; }
+  }
+
   //public methods
   //===========================================================================
   public void EnterMenuMode (MenuMode newMode)

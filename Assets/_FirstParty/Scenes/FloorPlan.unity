@@ -6178,8 +6178,8 @@ MonoBehaviour:
   _interactTouch: {fileID: 15634183}
   _distanceToInGameMenu: 0.75
   _yOffsetInGameMenu: 0
-  _distanceToContextSensitiveMenu: 0.25
-  _yOffsetContextSensitiveMenu: 0.1
+  _distanceToEditModeMenu: 0.25
+  _yOffsetEditModeMenu: 0.1
   _currentModeText: {fileID: 1058656638}
   _intearctPointer: {fileID: 15634180}
 --- !u!4 &1267776201
@@ -11826,7 +11826,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2092604901}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 348608936}
+        m_MethodName: OnButtonRemove
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &2092604901
