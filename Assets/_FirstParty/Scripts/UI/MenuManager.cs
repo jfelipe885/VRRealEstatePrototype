@@ -13,14 +13,15 @@ public class MenuManager : Singleton<MenuManager>
       _interactTouch.ControllerTouchInteractableObject += OnTouchEventHandler;
       _interactTouch.ControllerUntouchInteractableObject += OnUnTouchEventHandler;
     }
-    
-    //TODO: JFR: these need to be localized.    
+
+    //TODO: JFR: these need to be localized.
     _modeText[(int)MenuMode.InGameMenu] = "";
     _modeText[(int)MenuMode.ContextSensitive] = "Editing Mode";
+    _modeText[(int)MenuMode.AddFurniture] = "Add Furniture Mode";
   }
 
   //===========================================================================
-  public void Start ()
+  public void Start()
   {
     EnterMenuMode(MenuMode.InGameMenu);
   }
@@ -29,6 +30,7 @@ public class MenuManager : Singleton<MenuManager>
   {
     InGameMenu = 0,
     ContextSensitive,
+    AddFurniture,
     NumMenuModes,
   }
 
@@ -68,6 +70,10 @@ public class MenuManager : Singleton<MenuManager>
       case MenuMode.ContextSensitive:
         ShowContextSensitiveMenu();
         break;
+
+      case MenuMode.AddFurniture:
+        ShowAddFurnitureMenu();
+        break;
     }
   }
 
@@ -76,6 +82,7 @@ public class MenuManager : Singleton<MenuManager>
   {
     HideInGameMenu();
     HideContextSensitiveMenu();
+    HideAddFurnitureMenu();
   }
 
   //===========================================================================
@@ -98,11 +105,6 @@ public class MenuManager : Singleton<MenuManager>
     _inGameMenu.transform.position += (-_inGameMenu.transform.up * _yOffsetInGameMenu);
     _inGameMenu.transform.LookAt(_inGameMenu.transform.position + (_camera.transform.forward * _distanceToInGameMenu));
     _inGameMenu.SetActive(true);
-
-    if (_currentModeText != null)
-    {
-      _currentModeText.text = "";
-    }
   }
 
   //===========================================================================
@@ -152,15 +154,45 @@ public class MenuManager : Singleton<MenuManager>
 
     if (_currentInteractableObject == null)
     {
-      Debug.LogError("HideContextSensitiveMenu() _currentInteractableObject == null");
       return;
-    }    
+    }
     RM2_InteractableObject interactable = _currentInteractableObject.GetComponent<RM2_InteractableObject>();
     if (interactable != null)
     {
       interactable.StopTouching(null);
       interactable.ForceHightLight = false;
       interactable.ToggleHighlight(false);
+    }
+  }
+
+  //===========================================================================
+  public void ShowAddFurnitureMenu()
+  {
+    if (_camera == null)
+    {
+      Debug.LogError("ShowAddFurnitureMenu () _camera is null");
+      return;
+    }
+
+    if (_addFurnitureMenu == null)
+    {
+      Debug.LogError("ShowAddFurnitureMenu () _addFurnitureMenu is null");
+      return;
+    }
+
+    //get the camera forward vector
+    _addFurnitureMenu.transform.position = _camera.transform.position + (_camera.transform.forward * _distanceToInGameMenu);
+    _addFurnitureMenu.transform.position += (-_addFurnitureMenu.transform.up * _yOffsetInGameMenu);
+    _addFurnitureMenu.transform.LookAt(_addFurnitureMenu.transform.position + (_camera.transform.forward * _distanceToInGameMenu));
+    _addFurnitureMenu.SetActive(true);
+  }
+
+  //===========================================================================
+  public void HideAddFurnitureMenu()
+  {
+    if (_addFurnitureMenu != null)
+    {
+      _addFurnitureMenu.SetActive(false);
     }
   }
 
@@ -188,6 +220,9 @@ public class MenuManager : Singleton<MenuManager>
 
   [SerializeField]
   private GameObject _contextSensitiveMenu = null;
+
+  [SerializeField]
+  private GameObject _addFurnitureMenu = null;
 
   [SerializeField]
   private GameObject _camera = null;

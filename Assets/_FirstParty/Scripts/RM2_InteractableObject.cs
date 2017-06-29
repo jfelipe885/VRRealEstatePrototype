@@ -1,17 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using VRTK;
+﻿using VRTK;
 
 public class RM2_InteractableObject : VRTK_InteractableObject
 {
-  public bool ForceHightLight {
+  public bool ForceHightLight
+  {
     get { return _forceHightlight; }
     set { _forceHightlight = value; }
   }
 
   //===========================================================================
-  public override void ToggleHighlight(bool toggle)
+  public override void ToggleHighlight (bool toggle)
   {
     if (ForceHightLight == true)
     {
@@ -19,7 +17,6 @@ public class RM2_InteractableObject : VRTK_InteractableObject
     }
     base.ToggleHighlight(toggle);
   }
-
 
   private bool _forceHightlight = false;
 }

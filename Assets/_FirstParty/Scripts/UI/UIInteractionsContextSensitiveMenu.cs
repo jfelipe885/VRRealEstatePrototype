@@ -1,9 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.SceneManagement;
-using AC.TimeOfDaySystemFree;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
 public class UIInteractionsContextSensitiveMenu : MonoBehaviour
 {
@@ -21,17 +16,15 @@ public class UIInteractionsContextSensitiveMenu : MonoBehaviour
   //===========================================================================
   public void OnButtonRemove ()
   {
-
   }
 
   //===========================================================================
   public void OnChangeColor ()
   {
-
   }
 
   //protected methods
   //private methods
   //protected fields
-  //private fields    
+  //private fields
 }

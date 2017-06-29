@@ -1,13 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using VRTK;
 
 public class InteractableObjectManager : Singleton<InteractableObjectManager>
 {
   //Constructors(in descending order of complexity)
   //===========================================================================
-  void Start ()
+  private void Start ()
   {
     _allInteractableObjects = Object.FindObjectsOfType<VRTK_InteractableObject>();
   }
@@ -17,7 +15,7 @@ public class InteractableObjectManager : Singleton<InteractableObjectManager>
 
   //public methods
   //===========================================================================
-  public void EnableInteractables()
+  public void EnableInteractables ()
   {
     foreach (VRTK_InteractableObject io in _allInteractableObjects)
     {
@@ -26,7 +24,7 @@ public class InteractableObjectManager : Singleton<InteractableObjectManager>
   }
 
   //===========================================================================
-  public void DisableInteractables()
+  public void DisableInteractables ()
   {
     foreach (VRTK_InteractableObject io in _allInteractableObjects)
     {
@@ -39,5 +37,5 @@ public class InteractableObjectManager : Singleton<InteractableObjectManager>
   //protected fields
   //private fields
 
-  VRTK.VRTK_InteractableObject[] _allInteractableObjects;
+  private VRTK.VRTK_InteractableObject[] _allInteractableObjects;
 }

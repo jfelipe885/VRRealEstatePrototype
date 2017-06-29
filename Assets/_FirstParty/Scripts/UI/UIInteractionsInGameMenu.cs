@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using AC.TimeOfDaySystemFree;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using AC.TimeOfDaySystemFree;
 using UnityEngine.UI;
 
 public class UIInteractionsInGameMenu : MonoBehaviour
@@ -38,9 +36,16 @@ public class UIInteractionsInGameMenu : MonoBehaviour
   public void OnButtonEdit ()
   {
     MenuManager.Instance.HideInGameMenu();
-    MenuManager.Instance.EnterMenuMode(MenuManager.MenuMode.ContextSensitive);    
+    MenuManager.Instance.EnterMenuMode(MenuManager.MenuMode.ContextSensitive);
   }
- 
+
+  //===========================================================================
+  public void OnButtonAddFurniture ()
+  {
+    MenuManager.Instance.HideInGameMenu();
+    MenuManager.Instance.EnterMenuMode(MenuManager.MenuMode.AddFurniture);
+  }
+
   //protected methods
   //private methods
   //protected fields
