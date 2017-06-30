@@ -500,9 +500,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   disableWhenIdle: 1
-  touchHighlightColor: {r: 0, g: 0, b: 0, a: 0}
+  touchHighlightColor: {r: 0, g: 1, b: 0.08965516, a: 0}
   allowedTouchControllers: 0
-  isGrabbable: 0
+  isGrabbable: 1
   holdButtonToGrab: 1
   stayGrabbedOnTeleport: 1
   validDrop: 1
@@ -518,6 +518,23 @@ MonoBehaviour:
   allowedUseControllers: 0
   usingState: 0
   _editModeActions: 0000000001000000020000000300000004000000
+--- !u!114 &25263364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 25263361}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c08517e04830d6d44a13c5ea5f574181, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  active: 1
+  unhighlightOnDisable: 1
+  thickness: 3
+  customOutlineModels: []
+  customOutlineModelPaths: []
+  enableSubmeshHighlight: 0
 --- !u!4 &45205100 stripped
 Transform:
   m_PrefabParentObject: {fileID: 481256, guid: 956bd2acf7aae244dac8fc20cf57858d, type: 2}
