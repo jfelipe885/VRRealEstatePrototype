@@ -35,16 +35,15 @@ public class UIInteractionsInGameMenu : MonoBehaviour
   //===========================================================================
   public void OnButtonEdit ()
   {
-    MenuManager.Instance.HideInGameMenu();
     MenuManager.Instance.EnterMenuMode(MenuManager.MenuMode.EditMode);
   }
 
   //===========================================================================
   public void OnButtonAddFurniture ()
   {
-    MenuManager.Instance.HideInGameMenu();
+    //MenuManager.Instance.HideInGameMenu();
     MenuManager.Instance.EnterMenuMode(MenuManager.MenuMode.AddFurniture);
-    MenuManager.Instance.HandleShowMenu();
+    MenuManager.Instance.ShowTopMenu();
   }
 
   //protected methods

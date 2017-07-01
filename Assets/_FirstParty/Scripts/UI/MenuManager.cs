@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 using VRTK;
 
@@ -24,8 +25,11 @@ public class MenuManager : Singleton<MenuManager>
   public void Start ()
   {
     EnterMenuMode(MenuMode.InGameMenu);
+    PushMenu(_inGameMenu);
   }
 
+  //public constants
+  //===================================
   public enum MenuMode
   {
     InGameMenu = 0,
@@ -49,6 +53,13 @@ public class MenuManager : Singleton<MenuManager>
     private set { _currentInteractableObject = value; }
   }
 
+  //===================================
+  public EditModeMenu EditMenu
+  {
+    get { return _editMenu; }
+    private set { _editMenu = value; }
+  }
+
   //public methods
   //===========================================================================
   public void EnterMenuMode (MenuMode newMode)
@@ -62,7 +73,92 @@ public class MenuManager : Singleton<MenuManager>
     CurrentMenuMode = newMode;
     _currentModeText.text = _modeText[(int)newMode];
 
-    _intearctPointer.interactWithObjects = (newMode == MenuMode.EditMode);
+    switch (newMode)
+    {
+      case MenuMode.EditMode:
+        _intearctPointer.interactWithObjects = true;
+        PushMenu(_editMenu);
+        break;
+
+      case MenuMode.InGameMenu:
+        PushMenu(_inGameMenu);
+        break;
+
+      case MenuMode.AddFurniture:
+        PushMenu(_addFurnitureMenu);
+        break;
+    }
+  }
+
+  //===========================================================================
+  public void ShowTopMenu ()
+  {
+    if (_menuStack.Count == 0)
+    {
+      return;
+    }
+
+    BaseMenu topMenu = _menuStack.Peek();
+    switch (topMenu.MenuPosition)
+    {
+      case BaseMenu.MenuPositions.InFrontUser:
+        InGameMenuTransform(topMenu.transform);
+        break;
+
+      case BaseMenu.MenuPositions.InFrontInteractable:
+        InteractableMenuTransform(topMenu.transform);
+        break;
+    }
+
+    if (CurrentInteractable != null)
+    {
+      RM2_InteractableObject interactable = CurrentInteractable.GetComponent<RM2_InteractableObject>();
+      topMenu.SetUpButtons(interactable);
+      //TODO: JFR: we might need a better way to handle this
+      interactable.ForceHightLight = true;
+    }
+    else
+    {
+      topMenu.SetUpButtons(null);
+    }
+    topMenu.gameObject.SetActive(true);
+  }
+
+  //===========================================================================
+  public void HideTopMenu ()
+  {
+    if (_menuStack.Count == 0)
+    {
+      return;
+    }
+    _menuStack.Peek().gameObject.SetActive(false);
+  }
+
+  //===========================================================================
+  public void PushMenu (BaseMenu menu)
+  {
+    if (menu == null)
+    {
+      Debug.LogError("ShowMenu() menu == null");
+      return;
+    }
+
+    if (_menuStack.Count > 0)
+    {
+      _menuStack.Peek().gameObject.SetActive(false);
+    }
+
+    _menuStack.Push(menu);
+  }
+
+  //===========================================================================
+  public void PopMenu ()
+  {
+    if (_menuStack.Count == 0)
+    {
+      return;
+    }
+    _menuStack.Pop().gameObject.SetActive(false);
   }
 
   //===========================================================================
@@ -85,14 +181,6 @@ public class MenuManager : Singleton<MenuManager>
   }
 
   //===========================================================================
-  public void HandleHideMenu ()
-  {
-    HideInGameMenu();
-    HideEditModeMenu();
-    HideAddFurnitureMenu();
-  }
-
-  //===========================================================================
   public void ShowInGameMenu ()
   {
     if (_camera == null)
@@ -106,21 +194,7 @@ public class MenuManager : Singleton<MenuManager>
       Debug.LogError("ShowInGameMenu () _inGameMenu is null");
       return;
     }
-
-    //get the camera forward vector
-    _inGameMenu.transform.position = _camera.transform.position + (_camera.transform.forward * _distanceToInGameMenu);
-    _inGameMenu.transform.position += (-_inGameMenu.transform.up * _yOffsetInGameMenu);
-    _inGameMenu.transform.LookAt(_inGameMenu.transform.position + (_camera.transform.forward * _distanceToInGameMenu));
-    _inGameMenu.SetActive(true);
-  }
-
-  //===========================================================================
-  public void HideInGameMenu ()
-  {
-    if (_inGameMenu != null)
-    {
-      _inGameMenu.SetActive(false);
-    }
+    ShowTopMenu();
   }
 
   //===========================================================================
@@ -136,18 +210,24 @@ public class MenuManager : Singleton<MenuManager>
       return;
     }
 
+    ShowTopMenu();
+  }
+
+  //===========================================================================
+  public void InGameMenuTransform (Transform inGameMenutransform)
+  {
+    inGameMenutransform.position = _camera.transform.position + (_camera.transform.forward * _distanceInFrontUser);
+    inGameMenutransform.position += (-inGameMenutransform.up * _yOffsetInGameMenu);
+    inGameMenutransform.LookAt(_inGameMenu.transform.position + (_camera.transform.forward * _distanceInFrontUser));
+  }
+
+  //===========================================================================
+  public void InteractableMenuTransform (Transform menuTransform)
+  {
     //let's set up the menu along the vector between the camera and the object
     Vector3 cameraToObjectVector = (_currentInteractableObject.transform.position - _camera.transform.position);
-    _editMenu.transform.position = _camera.transform.position + cameraToObjectVector * _distanceToEditModeMenu;    
-    _editMenu.transform.LookAt(_currentInteractableObject.transform.position);
-    _editMenu.gameObject.SetActive(true);
-
-    RM2_InteractableObject interactable = _currentInteractableObject.GetComponent<RM2_InteractableObject>();
-    if (interactable != null)
-    {
-      interactable.ForceHightLight = true;
-      _editMenu.SetUpButtons(interactable);
-    }
+    menuTransform.position = _camera.transform.position + cameraToObjectVector * _distanceMenuToInteractable;
+    menuTransform.LookAt(_currentInteractableObject.transform.position);
   }
 
   //===========================================================================
@@ -158,7 +238,13 @@ public class MenuManager : Singleton<MenuManager>
       Debug.LogError("HideEditModeMenu() _editMenu == null");
       return;
     }
-    _editMenu.gameObject.SetActive(false);
+
+    if (_menuStack.Peek() != _editMenu)
+    {
+      Debug.LogWarning("HideEditModeMenu (), _menuStack.Peek() != _editMenu");
+    }
+
+    HideTopMenu();
 
     if (_currentInteractableObject == null)
     {
@@ -188,20 +274,7 @@ public class MenuManager : Singleton<MenuManager>
       return;
     }
 
-    //get the camera forward vector
-    _addFurnitureMenu.transform.position = _camera.transform.position + (_camera.transform.forward * _distanceToInGameMenu);
-    _addFurnitureMenu.transform.position += (-_addFurnitureMenu.transform.up * _yOffsetInGameMenu);
-    _addFurnitureMenu.transform.LookAt(_addFurnitureMenu.transform.position + (_camera.transform.forward * _distanceToInGameMenu));
-    _addFurnitureMenu.SetActive(true);
-  }
-
-  //===========================================================================
-  public void HideAddFurnitureMenu ()
-  {
-    if (_addFurnitureMenu != null)
-    {
-      _addFurnitureMenu.SetActive(false);
-    }
+    ShowTopMenu();
   }
 
   //protected methods
@@ -224,13 +297,13 @@ public class MenuManager : Singleton<MenuManager>
 
   //private fields
   [SerializeField]
-  private GameObject _inGameMenu = null;
+  private BaseMenu _inGameMenu = null;
 
   [SerializeField]
   private EditModeMenu _editMenu = null;
 
   [SerializeField]
-  private GameObject _addFurnitureMenu = null;
+  private BaseMenu _addFurnitureMenu = null;
 
   [SerializeField]
   private GameObject _camera = null;
@@ -239,16 +312,13 @@ public class MenuManager : Singleton<MenuManager>
   private VRTK_InteractTouch _interactTouch = null;
 
   [SerializeField]
-  private float _distanceToInGameMenu = 0.5f; //meters?
+  private float _distanceInFrontUser = 0.75f; //meters?
 
   [SerializeField]
   private float _yOffsetInGameMenu = 0.1f;
 
   [SerializeField]
-  private float _distanceToEditModeMenu = 0.25f; //meters?
-
-  [SerializeField]
-  private float _yOffsetEditModeMenu = 0.1f;
+  private float _distanceMenuToInteractable = 0.25f; //meters?
 
   [SerializeField]
   private Text _currentModeText = null;
@@ -261,4 +331,6 @@ public class MenuManager : Singleton<MenuManager>
   private MenuMode _currentMenuMode = MenuMode.InGameMenu;
 
   private string[] _modeText = new string[(int)MenuMode.NumMenuModes];
+
+  private Stack<BaseMenu> _menuStack = new Stack<BaseMenu>(10);
 }

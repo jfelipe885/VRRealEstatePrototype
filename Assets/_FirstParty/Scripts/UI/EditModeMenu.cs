@@ -1,11 +1,23 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class EditModeMenu : MonoBehaviour
+public class EditModeMenu : BaseMenu
 {
+  //Constructors (in descending order of complexity)
+
+  //public constants
+
+  //properties
+
+  //public methods
   //===========================================================================
-  public void SetUpButtons (RM2_InteractableObject interactable)
+  public void ShowPickColor ()
+  {
+    MenuManager.Instance.PushMenu(_pickColorMenu);
+    MenuManager.Instance.ShowTopMenu();
+  }
+
+  //===========================================================================
+  public override void SetUpButtons (RM2_InteractableObject interactable)
   {
     if (interactable == null)
     {
@@ -22,6 +34,19 @@ public class EditModeMenu : MonoBehaviour
     }
   }
 
+  //protected methods
+
+  //private methods
+
+  //protected fields
+
+  //private fields
   [SerializeField]
-  private EditModeButton[] _editModeButtons;
+  private BaseMenu _pickColorMenu = null;
+
+  [SerializeField]
+  private GameObject _pickMaterialMenu = null;
+
+  [SerializeField]
+  private EditModeButton[] _editModeButtons = null;
 }

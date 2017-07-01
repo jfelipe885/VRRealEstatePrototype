@@ -3,14 +3,16 @@
 public class UIInteractionsEditModeMenu : MonoBehaviour
 {
   //Constructors(in descending order of complexity)
+
   //public constants
+
   //properties
+
   //public methods
   //===========================================================================
   public void OnButtonClose ()
   {
     MenuManager.Instance.EnterMenuMode(MenuManager.MenuMode.InGameMenu);
-    MenuManager.Instance.HandleHideMenu();
   }
 
   //===========================================================================
@@ -23,23 +25,29 @@ public class UIInteractionsEditModeMenu : MonoBehaviour
     }
 
     Destroy(currentInteractable);
-    MenuManager.Instance.HandleHideMenu();
   }
 
   //===========================================================================
   public void OnChangeColor ()
   {
+    if (MenuManager.Instance.EditMenu == null)
+    {
+      return;
+    }
 
+    MenuManager.Instance.EditMenu.ShowPickColor();
   }
 
   //===========================================================================
   public void OnButtonSwap ()
   {
-
   }
 
   //protected methods
+
   //private methods
+
   //protected fields
+
   //private fields
 }

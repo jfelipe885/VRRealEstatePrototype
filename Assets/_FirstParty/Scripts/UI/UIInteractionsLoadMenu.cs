@@ -1,54 +1,52 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class UIInteractionsLoadMenu : MonoBehaviour
 {
   //===========================================================================
-  public void OnButtonLoadSLot1()
+  public void OnButtonLoadSLot1 ()
   {
-    //TODO: JFR: 
-    Debug.LogWarning("TODO: Add load slot 1 function here");        
+    //TODO: JFR:
+    Debug.LogWarning("TODO: Add load slot 1 function here");
   }
 
   //===========================================================================
-  public void OnButtonDeleteSLot1()
+  public void OnButtonDeleteSLot1 ()
   {
-    //TODO: JFR: 
-    Debug.LogWarning("TODO: Add delete slot 1 function here");    
+    //TODO: JFR:
+    Debug.LogWarning("TODO: Add delete slot 1 function here");
   }
 
   //===========================================================================
-  public void OnButtonLoadSLot2()
+  public void OnButtonLoadSLot2 ()
   {
-    //TODO: JFR: 
+    //TODO: JFR:
     Debug.LogWarning("TODO: Add load slot 2 function here");
   }
 
   //===========================================================================
-  public void OnButtonDeleteSLot2()
+  public void OnButtonDeleteSLot2 ()
   {
-    //TODO: JFR: 
+    //TODO: JFR:
     Debug.LogWarning("TODO: Add delete slot 2 function here");
   }
 
   //===========================================================================
-  public void OnButtonLoadSLot3()
+  public void OnButtonLoadSLot3 ()
   {
-    //TODO: JFR: 
+    //TODO: JFR:
     Debug.LogWarning("TODO: Add load slot 3 function here");
   }
 
   //===========================================================================
-  public void OnButtonDeleteSLot3()
+  public void OnButtonDeleteSLot3 ()
   {
-    //TODO: JFR: 
+    //TODO: JFR:
     Debug.LogWarning("TODO: Add delete slot 3 function here");
   }
 
   //===========================================================================
-  public void OnButtonPressedBack()
+  public void OnButtonPressedBack ()
   {
     SceneManager.LoadScene("MainMenu");
   }
