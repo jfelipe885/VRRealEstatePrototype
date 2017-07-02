@@ -131,7 +131,13 @@ public class MenuManager : Singleton<MenuManager>
     {
       return;
     }
-    _menuStack.Peek().gameObject.SetActive(false);
+
+    BaseMenu topMenu = _menuStack.Peek();
+    topMenu.gameObject.SetActive(false);
+    if (topMenu.PopWhenHidden == true)
+    {
+      _menuStack.Pop();
+    }
   }
 
   //===========================================================================
@@ -257,6 +263,7 @@ public class MenuManager : Singleton<MenuManager>
       interactable.ForceHightLight = false;
       interactable.ToggleHighlight(false);
     }
+    _currentInteractableObject = null;
   }
 
   //===========================================================================

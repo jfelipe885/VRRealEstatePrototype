@@ -17,6 +17,13 @@ public class EditModeMenu : BaseMenu
   }
 
   //===========================================================================
+  public void ShowPickMaterial ()
+  {
+    MenuManager.Instance.PushMenu(_pickMaterialMenu);
+    MenuManager.Instance.ShowTopMenu();
+  }
+
+  //===========================================================================
   public override void SetUpButtons (RM2_InteractableObject interactable)
   {
     if (interactable == null)
@@ -45,7 +52,7 @@ public class EditModeMenu : BaseMenu
   private BaseMenu _pickColorMenu = null;
 
   [SerializeField]
-  private GameObject _pickMaterialMenu = null;
+  private BaseMenu _pickMaterialMenu = null;
 
   [SerializeField]
   private EditModeButton[] _editModeButtons = null;

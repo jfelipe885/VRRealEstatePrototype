@@ -43,6 +43,17 @@ public class UIInteractionsEditModeMenu : MonoBehaviour
   {
   }
 
+  //===========================================================================
+  public void OnMaterialButtonClicked ()
+  {
+    if (MenuManager.Instance.EditMenu == null)
+    {
+      return;
+    }
+
+    MenuManager.Instance.EditMenu.ShowPickMaterial();
+  }
+
   //protected methods
 
   //private methods

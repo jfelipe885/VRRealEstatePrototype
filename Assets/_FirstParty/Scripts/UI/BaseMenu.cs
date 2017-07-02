@@ -20,6 +20,13 @@ public class BaseMenu : MonoBehaviour
     private set { _menuPosition = value; }
   }
 
+  //===================================
+  public bool PopWhenHidden
+  {
+    get { return _popWhenHidden; }
+    private set { _popWhenHidden = value; }
+  }
+
   //public methods
   //===========================================================================
   public virtual void SetUpButtons (RM2_InteractableObject interactable) { }
@@ -30,4 +37,7 @@ public class BaseMenu : MonoBehaviour
   //private fields
   [SerializeField]
   private MenuPositions _menuPosition = MenuPositions.InFrontUser;
+
+  [SerializeField]
+  private bool _popWhenHidden = false;
 }
