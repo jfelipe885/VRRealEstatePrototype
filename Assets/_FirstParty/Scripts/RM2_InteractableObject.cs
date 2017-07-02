@@ -97,6 +97,15 @@ public class RM2_InteractableObject : VRTK_InteractableObject
   //===========================================================================
   public override void ToggleHighlight (bool toggle)
   {
+    //TODO: JFR: this seems pretty hacky. we might find a better way to do this later. or at least get rid of the MenuManager here
+    if (MenuManager.Instance.LockedInteractableObject != null)
+    {
+      if (MenuManager.Instance.LockedInteractableObject != this.gameObject)
+      {
+        return;
+      }
+    }
+
     if (ForceHightLight == true)
     {
       toggle = true;

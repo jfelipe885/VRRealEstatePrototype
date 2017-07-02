@@ -16,13 +16,13 @@ public class UIInteractionsPickColorMenu : MonoBehaviour
       return;
     }
 
-    RM2_InteractableObject interactable = MenuManager.Instance.CurrentInteractable.GetComponent<RM2_InteractableObject>();
-    if (interactable == null)
+    RM2_InteractableObject lockedInteractable = MenuManager.Instance.LockedInteractableObject.GetComponent<RM2_InteractableObject>();
+    if (lockedInteractable == null)
     {
       return;
     }
 
-    interactable.ChangeColor(image.color);
+    lockedInteractable.ChangeColor(image.color);
   }
 
   //===========================================================================

@@ -112,28 +112,66 @@ public class ControllerEventListener : MonoBehaviour
     DebugLogger(e.controllerIndex, "TRIGGER", "unclicked", e);
   }
 
+  //===========================================================================
   private void DoTriggerAxisChanged (object sender, ControllerInteractionEventArgs e)
   {
     DebugLogger(e.controllerIndex, "TRIGGER", "axis changed", e);
   }
 
+  //===========================================================================
   private void DoGripPressed (object sender, ControllerInteractionEventArgs e)
   {
     DebugLogger(e.controllerIndex, "GRIP", "pressed", e);
     MenuManager.Instance.HandleShowMenu();
+
+    //lock interactable
+    if (MenuManager.Instance.CurrentMenusLockInteractable() && MenuManager.Instance.TouchedInteractableObject != null)
+    {
+      RM2_InteractableObject interactable =  MenuManager.Instance.TouchedInteractableObject.GetComponent<RM2_InteractableObject>();
+      if (interactable != null)
+      {
+        MenuManager.Instance.LockedInteractableObject = interactable.gameObject;
+        interactable.ForceHightLight = true;
+      }
+    }
   }
 
+  //===========================================================================
   private void DoGripReleased (object sender, ControllerInteractionEventArgs e)
   {
     DebugLogger(e.controllerIndex, "GRIP", "released", e);
     MenuManager.Instance.HideTopMenu();
+
+    //Unlock interactable
+    if (MenuManager.Instance.LockedInteractableObject != null)
+    {
+      RM2_InteractableObject lockedInteractable = MenuManager.Instance.LockedInteractableObject.GetComponent<RM2_InteractableObject>();
+      if (lockedInteractable != null)
+      {
+        lockedInteractable.ForceHightLight = false;
+        lockedInteractable.ToggleHighlight(false);
+        MenuManager.Instance.LockedInteractableObject = null;
+      }
+    }
+
+    //Once we unlock an interactable we need to check to see if we are touching another interactable and highlight it properly
+    if (MenuManager.Instance.TouchedInteractableObject != null)
+    {
+      RM2_InteractableObject currentInteractable = MenuManager.Instance.TouchedInteractableObject.GetComponent<RM2_InteractableObject>();
+      if (currentInteractable != null)
+      {
+        currentInteractable.ToggleHighlight(true);
+      }
+    }
   }
 
+  //===========================================================================
   private void DoGripTouchStart (object sender, ControllerInteractionEventArgs e)
   {
     DebugLogger(e.controllerIndex, "GRIP", "touched", e);
   }
 
+  //===========================================================================
   private void DoGripTouchEnd (object sender, ControllerInteractionEventArgs e)
   {
     DebugLogger(e.controllerIndex, "GRIP", "untouched", e);

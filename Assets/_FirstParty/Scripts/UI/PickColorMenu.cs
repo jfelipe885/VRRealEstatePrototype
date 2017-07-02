@@ -10,6 +10,12 @@ public class PickColorMenu : BaseMenu
   //===========================================================================
   public override void SetUpButtons (RM2_InteractableObject interactable)
   {
+    if (interactable == null)
+    {
+      Debug.LogError("SetUpButtons(), interactable == null");
+      return;
+    }
+
     base.SetUpButtons(interactable);
 
     if(_originalColorImage == null)
@@ -17,13 +23,6 @@ public class PickColorMenu : BaseMenu
       Debug.LogError("SetUpButtons(), _originalColorButton == null");
       return;
     }
-
-    if (interactable == null)
-    {
-      Debug.LogError("SetUpButtons(), interactable == null");
-      return;
-    }
-
     _originalColorImage.color = interactable.OriginalColor;
   }
 

@@ -47,10 +47,10 @@ public class MenuManager : Singleton<MenuManager>
   }
 
   //===================================
-  public GameObject CurrentInteractable
+  public GameObject TouchedInteractableObject
   {
-    get { return _currentInteractableObject; }
-    private set { _currentInteractableObject = value; }
+    get { return _touchedInteractableObject; }
+    private set { _touchedInteractableObject = value; }
   }
 
   //===================================
@@ -58,6 +58,13 @@ public class MenuManager : Singleton<MenuManager>
   {
     get { return _editMenu; }
     private set { _editMenu = value; }
+  }
+
+  //===================================
+  public GameObject LockedInteractableObject
+  {
+    get { return _lockedInteractableObject; }
+    set { _lockedInteractableObject = value; }
   }
 
   //public methods
@@ -82,6 +89,7 @@ public class MenuManager : Singleton<MenuManager>
 
       case MenuMode.InGameMenu:
         PushMenu(_inGameMenu);
+        _intearctPointer.interactWithObjects = false;
         break;
 
       case MenuMode.AddFurniture:
@@ -108,22 +116,17 @@ public class MenuManager : Singleton<MenuManager>
       case BaseMenu.MenuPositions.InFrontInteractable:
         InteractableMenuTransform(topMenu.transform);
         break;
+
+      case BaseMenu.MenuPositions.InFrontLockInteractable:
+        LockedInteractableMenuTransform(topMenu.transform);
+        break;
     }
 
-    if (CurrentInteractable != null)
-    {
-      RM2_InteractableObject interactable = CurrentInteractable.GetComponent<RM2_InteractableObject>();
-      if (interactable != null)
-      {
-        topMenu.SetUpButtons(interactable);
-        //TODO: JFR: we might need a better way to handle this
-        interactable.ForceHightLight = true;
-      }
-    }
-    else
-    {
-      topMenu.SetUpButtons(null);
-    }
+
+    RM2_InteractableObject interactable = (TouchedInteractableObject == null) ? 
+      ((LockedInteractableObject == null) ? null : LockedInteractableObject.GetComponent<RM2_InteractableObject>())
+      : TouchedInteractableObject.GetComponent<RM2_InteractableObject>();
+    topMenu.SetUpButtons(interactable);    
     topMenu.gameObject.SetActive(true);
   }
 
@@ -214,7 +217,7 @@ public class MenuManager : Singleton<MenuManager>
       Debug.LogError("ShowEditModeMenu () _editMenu == null");
       return;
     }
-    if (_currentInteractableObject == null)
+    if (_touchedInteractableObject == null)
     {
       return;
     }
@@ -234,9 +237,18 @@ public class MenuManager : Singleton<MenuManager>
   public void InteractableMenuTransform (Transform menuTransform)
   {
     //let's set up the menu along the vector between the camera and the object
-    Vector3 cameraToObjectVector = (_currentInteractableObject.transform.position - _camera.transform.position);
+    Vector3 cameraToObjectVector = (_touchedInteractableObject.transform.position - _camera.transform.position);
     menuTransform.position = _camera.transform.position + cameraToObjectVector * _distanceMenuToInteractable;
-    menuTransform.LookAt(_currentInteractableObject.transform.position);
+    menuTransform.LookAt(_touchedInteractableObject.transform.position);
+  }
+
+  //===========================================================================
+  public void LockedInteractableMenuTransform (Transform menuTransform)
+  {
+    //let's set up the menu along the vector between the camera and the object
+    Vector3 cameraToObjectVector = (LockedInteractableObject.transform.position - _camera.transform.position);
+    menuTransform.position = _camera.transform.position + cameraToObjectVector * _distanceMenuToInteractable;
+    menuTransform.LookAt(LockedInteractableObject.transform.position);
   }
 
   //===========================================================================
@@ -255,18 +267,18 @@ public class MenuManager : Singleton<MenuManager>
 
     HideTopMenu();
 
-    if (_currentInteractableObject == null)
+    if (_touchedInteractableObject == null)
     {
       return;
     }
-    RM2_InteractableObject interactable = _currentInteractableObject.GetComponent<RM2_InteractableObject>();
+    RM2_InteractableObject interactable = _touchedInteractableObject.GetComponent<RM2_InteractableObject>();
     if (interactable != null)
     {
       interactable.StopTouching(null);
       interactable.ForceHightLight = false;
       interactable.ToggleHighlight(false);
     }
-    _currentInteractableObject = null;
+    _touchedInteractableObject = null;
   }
 
   //===========================================================================
@@ -287,19 +299,34 @@ public class MenuManager : Singleton<MenuManager>
     ShowTopMenu();
   }
 
+  //===========================================================================
+  public bool CurrentMenusLockInteractable ()
+  {
+    BaseMenu[] menuArray = _menuStack.ToArray();
+    foreach (BaseMenu m in menuArray)
+    {
+      EditModeMenu editModeMenu = m.GetComponent<EditModeMenu>();
+      if (editModeMenu != null)
+      {
+        return true;
+      }
+    }
+    return false;
+  }
+
   //protected methods
   //private methods
   //===========================================================================
   private void OnTouchEventHandler (object sender, ObjectInteractEventArgs e)
   {
-    _currentInteractableObject = e.target;
+    _touchedInteractableObject = e.target;
     return;
   }
 
   //===========================================================================
   private void OnUnTouchEventHandler (object sender, ObjectInteractEventArgs e)
   {
-    //_currentInteractableObject = null;
+    _touchedInteractableObject = null;
     return;
   }
 
@@ -335,8 +362,12 @@ public class MenuManager : Singleton<MenuManager>
 
   [SerializeField]
   private VRTK_Pointer _intearctPointer = null;
+  
+  //Object that our pointer is currently touching.
+  private GameObject _touchedInteractableObject = null;
 
-  private GameObject _currentInteractableObject = null;
+  //Object that we have locked on that we are currently editing.
+  private GameObject _lockedInteractableObject = null;
 
   private MenuMode _currentMenuMode = MenuMode.InGameMenu;
 
