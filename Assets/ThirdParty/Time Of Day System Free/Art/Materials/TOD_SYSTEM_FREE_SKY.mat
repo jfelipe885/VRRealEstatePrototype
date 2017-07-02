@@ -49,12 +49,12 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _ArtCubemapExposure: 0
-    - _AtmosphereThickness: 1
+    - _AtmosphereThickness: 5
     - _CloudSharpness: 2.35
     - _CloudsAltitude: 1
     - _CloudsRotationSpeed: 9.3
     - _CloudsSize: 0.2
-    - _Exposure: 1.3
+    - _Exposure: 1
     - _G: 0.87
     - _MoonShadowIntensity: 1
     - _MoonShadowPosX: 0.025

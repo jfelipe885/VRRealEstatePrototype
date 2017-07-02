@@ -17,7 +17,7 @@ public class VRDeviceManager : MonoBehaviour
   [SerializeField]
   private GameObject _otherDevice = null;
 
-  [SerializeField]
+  //[SerializeField]
   private GameObject _cameraRig = null;
 
   private List<GameObject> _devices = new List<GameObject>(4);

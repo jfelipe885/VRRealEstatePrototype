@@ -113,9 +113,12 @@ public class MenuManager : Singleton<MenuManager>
     if (CurrentInteractable != null)
     {
       RM2_InteractableObject interactable = CurrentInteractable.GetComponent<RM2_InteractableObject>();
-      topMenu.SetUpButtons(interactable);
-      //TODO: JFR: we might need a better way to handle this
-      interactable.ForceHightLight = true;
+      if (interactable != null)
+      {
+        topMenu.SetUpButtons(interactable);
+        //TODO: JFR: we might need a better way to handle this
+        interactable.ForceHightLight = true;
+      }
     }
     else
     {
