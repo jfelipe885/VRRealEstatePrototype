@@ -110,15 +110,15 @@ public class MenuManager : Singleton<MenuManager>
     switch (topMenu.MenuPosition)
     {
       case BaseMenu.MenuPositions.InFrontUser:
-        InGameMenuTransform(topMenu.transform);
+        InFronUserTransform(topMenu.transform);
         break;
 
       case BaseMenu.MenuPositions.InFrontInteractable:
-        InteractableMenuTransform(topMenu.transform);
+        InFrontTouchedInteractableTransform(topMenu.transform);
         break;
 
       case BaseMenu.MenuPositions.InFrontLockInteractable:
-        LockedInteractableMenuTransform(topMenu.transform);
+        InFrontLockedInteractableTransform(topMenu.transform);
         break;
     }
 
@@ -219,22 +219,22 @@ public class MenuManager : Singleton<MenuManager>
     }
     if (_touchedInteractableObject == null)
     {
-      return;
+      PushMenu(_editMenuNothingTouched);
     }
 
     ShowTopMenu();
   }
 
   //===========================================================================
-  public void InGameMenuTransform (Transform inGameMenutransform)
+  public void InFronUserTransform (Transform inFrontUserTransform)
   {
-    inGameMenutransform.position = _camera.transform.position + (_camera.transform.forward * _distanceInFrontUser);
-    inGameMenutransform.position += (-inGameMenutransform.up * _yOffsetInGameMenu);
-    inGameMenutransform.LookAt(_inGameMenu.transform.position + (_camera.transform.forward * _distanceInFrontUser));
+    inFrontUserTransform.position = _camera.transform.position + (_camera.transform.forward * _distanceInFrontUser);
+    inFrontUserTransform.position += (-inFrontUserTransform.up * _yOffsetInGameMenu);
+    inFrontUserTransform.LookAt(inFrontUserTransform.transform.position + (_camera.transform.forward * _distanceInFrontUser));
   }
 
   //===========================================================================
-  public void InteractableMenuTransform (Transform menuTransform)
+  public void InFrontTouchedInteractableTransform (Transform menuTransform)
   {
     //let's set up the menu along the vector between the camera and the object
     Vector3 cameraToObjectVector = (_touchedInteractableObject.transform.position - _camera.transform.position);
@@ -243,7 +243,7 @@ public class MenuManager : Singleton<MenuManager>
   }
 
   //===========================================================================
-  public void LockedInteractableMenuTransform (Transform menuTransform)
+  public void InFrontLockedInteractableTransform (Transform menuTransform)
   {
     //let's set up the menu along the vector between the camera and the object
     Vector3 cameraToObjectVector = (LockedInteractableObject.transform.position - _camera.transform.position);
@@ -338,6 +338,9 @@ public class MenuManager : Singleton<MenuManager>
 
   [SerializeField]
   private EditModeMenu _editMenu = null;
+
+  [SerializeField]
+  private BaseMenu _editMenuNothingTouched = null;
 
   [SerializeField]
   private BaseMenu _addFurnitureMenu = null;
