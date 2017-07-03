@@ -276,9 +276,9 @@ public class MenuManager : Singleton<MenuManager>
   private void InFrontInteractable (Transform menuTransform, GameObject interactable)
   {
     //let's set up the menu along the vector between the camera and the object
-    Vector3 vectorForMenuDisplay = vectorForMenuDisplay = (interactable.transform.position - _camera.transform.position);    
+    Vector3 vectorForMenuDisplay = (interactable.transform.position - _camera.transform.position);
     float distanceToInteractable = (vectorForMenuDisplay * _distanceMenuToInteractableFactor).magnitude;
-    distanceToInteractable =  Mathf.Clamp(distanceToInteractable, _minDistanceToInteractable, _maxDistanceToInteractable);    
+    distanceToInteractable =  Mathf.Clamp(distanceToInteractable, _minDistanceToInteractable, _maxDistanceToInteractable);
     menuTransform.position = _camera.transform.position + vectorForMenuDisplay.normalized * distanceToInteractable;
     menuTransform.LookAt(interactable.transform.position);
   }

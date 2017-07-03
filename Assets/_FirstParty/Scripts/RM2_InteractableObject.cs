@@ -25,10 +25,10 @@ public class RM2_InteractableObject : VRTK_InteractableObject
   }
 
   //===================================
-  public Material OriginalMaterial
+  public Material OriginalMaterialCopy
   {
-    get { return _originalMaterial; }
-    private set { _originalMaterial = value; }
+    get { return _originalMaterialCopy; }
+    private set { _originalMaterialCopy = value; }
   }
 
   //===================================
@@ -41,12 +41,14 @@ public class RM2_InteractableObject : VRTK_InteractableObject
   //public methods
 
   //===========================================================================
-  public void Start ()
+  override protected void Awake ()
   {
+    base.Awake();
     Renderer renderer = GetComponent<Renderer>();
     if (renderer != null)
     {
-      _originalMaterial = new Material(renderer.material);
+      //this actually makes a copy of the material
+      _originalMaterialCopy = new Material(renderer.material);
       _originalColor = renderer.material.color;
     }
   }
@@ -126,5 +128,5 @@ public class RM2_InteractableObject : VRTK_InteractableObject
 
   private Color _originalColor = new Color();
 
-  private Material _originalMaterial = null;
+  private Material _originalMaterialCopy = null;
 }

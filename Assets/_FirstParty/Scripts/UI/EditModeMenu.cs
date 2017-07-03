@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class EditModeMenu : BaseMenu
 {
@@ -31,12 +32,23 @@ public class EditModeMenu : BaseMenu
       return;
     }
 
-    foreach (EditModeButton button in _editModeButtons)
+    ChangeColorEditAction changeColorEditAction = interactable.GetComponent<ChangeColorEditAction>();
+    if (_colorButton != null)
     {
-      button.gameObject.SetActive(false);
-      if (interactable.HasEditModeAction(button.EditModeAction) == true)
+      _colorButton.gameObject.SetActive(false);
+      if(changeColorEditAction != null)
       {
-        button.gameObject.SetActive(true);
+        _colorButton.gameObject.SetActive(true);
+      }
+    }
+
+    ChangeMaterialEditAction changeMaterialEditAction = interactable.GetComponent<ChangeMaterialEditAction>();
+    if (_materialButton != null)
+    {
+      _materialButton.gameObject.SetActive(false);
+      if (changeMaterialEditAction != null)
+      {
+        _materialButton.gameObject.SetActive(true);
       }
     }
   }
@@ -54,6 +66,19 @@ public class EditModeMenu : BaseMenu
   [SerializeField]
   private BaseMenu _pickMaterialMenu = null;
 
+  //JFR: TODO: need to implement these
   [SerializeField]
-  private EditModeButton[] _editModeButtons = null;
+  private Button _removeButton = null;
+
+  [SerializeField]
+  private Button _swapButton = null;
+
+  [SerializeField]
+  private Button _colorButton = null;
+
+  [SerializeField]
+  private Button _onOffButton = null;
+
+  [SerializeField]
+  private Button _materialButton = null;
 }
