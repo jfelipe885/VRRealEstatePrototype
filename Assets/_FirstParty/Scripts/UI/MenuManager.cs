@@ -120,6 +120,15 @@ public class MenuManager : Singleton<MenuManager>
       case BaseMenu.MenuPositions.InFrontLockInteractable:
         InFrontLockedInteractableTransform(topMenu.transform);
         break;
+
+      case BaseMenu.MenuPositions.AlongPointerVector:
+        AlongPointerVectorTransform(topMenu.transform);
+        break;
+
+      case BaseMenu.MenuPositions.UseCurrentTransform:
+        topMenu.transform.position = _currentTransform.position;
+        topMenu.transform.rotation = _currentTransform.rotation;
+        break;
     }
 
 
@@ -157,6 +166,7 @@ public class MenuManager : Singleton<MenuManager>
 
     if (_menuStack.Count > 0)
     {
+      _currentTransform = _menuStack.Peek().transform;
       _menuStack.Peek().gameObject.SetActive(false);
     }
 
@@ -236,19 +246,41 @@ public class MenuManager : Singleton<MenuManager>
   //===========================================================================
   public void InFrontTouchedInteractableTransform (Transform menuTransform)
   {
-    //let's set up the menu along the vector between the camera and the object
-    Vector3 cameraToObjectVector = (_touchedInteractableObject.transform.position - _camera.transform.position);
-    menuTransform.position = _camera.transform.position + cameraToObjectVector * _distanceMenuToInteractable;
-    menuTransform.LookAt(_touchedInteractableObject.transform.position);
+    InFrontInteractable(menuTransform, _touchedInteractableObject);    
   }
 
   //===========================================================================
   public void InFrontLockedInteractableTransform (Transform menuTransform)
   {
+    InFrontInteractable(menuTransform, LockedInteractableObject);
+  }
+
+  //===========================================================================
+  public void AlongPointerVectorTransform (Transform menuTransform)
+  {
+    if (_intearctPointer == null)
+    {
+      Debug.LogWarning("AlongPointerVectorTransform() , _intearctPointer == null");
+      return;
+    }
+
+    RaycastHit rayCastHit = _intearctPointer.pointerRenderer.GetDestinationHit();
+    Vector3 vectorForMenuDisplay = (rayCastHit.point - _intearctPointer.transform.position);
+    float distanceToInteractable = (vectorForMenuDisplay * _distanceMenuToInteractableFactor).magnitude;
+    distanceToInteractable = Mathf.Clamp(distanceToInteractable, _minDistanceToInteractable, _maxDistanceToInteractable);
+    menuTransform.position = _intearctPointer.transform.position + vectorForMenuDisplay.normalized * distanceToInteractable;
+    menuTransform.LookAt(menuTransform.transform.position + vectorForMenuDisplay.normalized * distanceToInteractable);
+  }
+
+  //===========================================================================
+  private void InFrontInteractable (Transform menuTransform, GameObject interactable)
+  {
     //let's set up the menu along the vector between the camera and the object
-    Vector3 cameraToObjectVector = (LockedInteractableObject.transform.position - _camera.transform.position);
-    menuTransform.position = _camera.transform.position + cameraToObjectVector * _distanceMenuToInteractable;
-    menuTransform.LookAt(LockedInteractableObject.transform.position);
+    Vector3 vectorForMenuDisplay = vectorForMenuDisplay = (interactable.transform.position - _camera.transform.position);    
+    float distanceToInteractable = (vectorForMenuDisplay * _distanceMenuToInteractableFactor).magnitude;
+    distanceToInteractable =  Mathf.Clamp(distanceToInteractable, _minDistanceToInteractable, _maxDistanceToInteractable);    
+    menuTransform.position = _camera.transform.position + vectorForMenuDisplay.normalized * distanceToInteractable;
+    menuTransform.LookAt(interactable.transform.position);
   }
 
   //===========================================================================
@@ -352,13 +384,18 @@ public class MenuManager : Singleton<MenuManager>
   private VRTK_InteractTouch _interactTouch = null;
 
   [SerializeField]
-  private float _distanceInFrontUser = 0.75f; //meters?
+  private float _distanceInFrontUser = 0.75f; //Meters
 
   [SerializeField]
   private float _yOffsetInGameMenu = 0.1f;
 
   [SerializeField]
-  private float _distanceMenuToInteractable = 0.25f; //meters?
+  private float _distanceMenuToInteractableFactor = 0.25f;
+
+  [SerializeField]
+  private float _maxDistanceToInteractable = 0.75f; //Meters
+  [SerializeField]
+  private float _minDistanceToInteractable = 0.1f; //Meters
 
   [SerializeField]
   private Text _currentModeText = null;
@@ -377,4 +414,6 @@ public class MenuManager : Singleton<MenuManager>
   private string[] _modeText = new string[(int)MenuMode.NumMenuModes];
 
   private Stack<BaseMenu> _menuStack = new Stack<BaseMenu>(10);
+
+  private Transform _currentTransform = null;
 }

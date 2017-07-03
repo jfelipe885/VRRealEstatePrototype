@@ -11,6 +11,8 @@ public class BaseMenu : MonoBehaviour
     InFrontUser = 0,
     InFrontInteractable,
     InFrontLockInteractable,
+    AlongPointerVector,
+    UseCurrentTransform,
   }
 
   //properties

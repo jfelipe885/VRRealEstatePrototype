@@ -6552,7 +6552,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f38ecea177dccd4481a0c447f5273d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _menuPosition: 2
+  _menuPosition: 4
   _popWhenHidden: 1
   _originalMaterialImage: {fileID: 1162734024}
 --- !u!222 &770381376
@@ -9641,7 +9641,9 @@ MonoBehaviour:
   _interactTouch: {fileID: 15634183}
   _distanceInFrontUser: 0.75
   _yOffsetInGameMenu: 0
-  _distanceMenuToInteractable: 0.25
+  _distanceMenuToInteractableFactor: 0.5
+  _maxDistanceToInteractable: 0.75
+  _minDistanceToInteractable: 0.1
   _currentModeText: {fileID: 1058656638}
   _intearctPointer: {fileID: 15634180}
 --- !u!4 &1267776201
@@ -14204,7 +14206,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d8d6e9fc43aa8f458deaf7cbd245791, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _menuPosition: 2
+  _menuPosition: 4
   _popWhenHidden: 1
   _originalColorImage: {fileID: 553682844}
 --- !u!222 &1790304922
@@ -15812,7 +15814,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d060f91c14652d469579778a26668f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _menuPosition: 1
+  _menuPosition: 3
   _popWhenHidden: 0
   _pickColorMenu: {fileID: 1790304921}
   _pickMaterialMenu: {fileID: 770381375}
