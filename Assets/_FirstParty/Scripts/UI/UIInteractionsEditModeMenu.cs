@@ -41,6 +41,25 @@ public class UIInteractionsEditModeMenu : MonoBehaviour
   //===========================================================================
   public void OnButtonSwap ()
   {
+
+  }
+
+  //===========================================================================
+  public void OnOnOFFButtonClicked ()
+  {
+    GameObject lockedInteractable = MenuManager.Instance.LockedInteractableObject;
+    if (lockedInteractable == null)
+    {
+      return;
+    }
+
+    Light light = lockedInteractable.GetComponentInChildren<Light>();
+    if (light == null)
+    {
+      return;
+    }
+
+    light.enabled = !light.enabled;
   }
 
   //===========================================================================
