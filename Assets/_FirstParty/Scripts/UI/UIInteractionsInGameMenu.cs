@@ -35,7 +35,7 @@ public class UIInteractionsInGameMenu : MonoBehaviour
   //===========================================================================
   public void OnButtonEdit ()
   {
-    MenuManager.Instance.EnterMenuMode(MenuManager.MenuMode.EditMode);
+    MenuManager.Instance.EnterMenuMode(MenuManager.MenuMode.EditMode);    
   }
 
   //===========================================================================

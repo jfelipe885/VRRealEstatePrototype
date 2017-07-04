@@ -32,30 +32,26 @@ public class EditModeMenu : BaseMenu
       return;
     }
 
-    ChangeColorEditAction changeColorEditAction = interactable.GetComponent<ChangeColorEditAction>();
-    if (_colorButton != null)
-    {
-      _colorButton.gameObject.SetActive(false);
-      if(changeColorEditAction != null)
-      {
-        _colorButton.gameObject.SetActive(true);
-      }
-    }
-
-    ChangeMaterialEditAction changeMaterialEditAction = interactable.GetComponent<ChangeMaterialEditAction>();
-    if (_materialButton != null)
-    {
-      _materialButton.gameObject.SetActive(false);
-      if (changeMaterialEditAction != null)
-      {
-        _materialButton.gameObject.SetActive(true);
-      }
-    }
+    SetUpButton<ChangeColorEditAction>(interactable, _colorButton);
+    SetUpButton<ChangeMaterialEditAction>(interactable, _materialButton);
+    SetUpButton<RemoveObjectEditAction>(interactable, _removeButton);
+    SetUpButton<OnOffEditAction>(interactable, _onOffButton);
   }
 
   //protected methods
 
   //private methods
+  //===========================================================================
+  private void SetUpButton<T> (RM2_InteractableObject interactable, Button button)
+  {
+    button.gameObject.SetActive(false);
+    T component = interactable.GetComponent<T>();
+    if (component == null)
+    {
+      return;
+    }
+    button.gameObject.SetActive(true);
+  }
 
   //protected fields
 

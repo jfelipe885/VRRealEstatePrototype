@@ -54,19 +54,6 @@ public class RM2_InteractableObject : VRTK_InteractableObject
   }
 
   //===========================================================================
-  public bool HasEditModeAction (EditModeActions action)
-  {
-    foreach (EditModeActions a in _editModeActions)
-    {
-      if (a == action)
-      {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  //===========================================================================
   public void ChangeColor (Color color)
   {
     Renderer renderer = GetComponent<Renderer>();
