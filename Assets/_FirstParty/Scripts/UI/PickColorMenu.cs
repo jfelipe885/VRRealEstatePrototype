@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class PickColorMenu : BaseMenu
@@ -31,7 +30,12 @@ public class PickColorMenu : BaseMenu
       Debug.LogError("SetUpButtons(), _originalColorButton == null");
       return;
     }
-    _originalColorImage.color = changeColorEditAction.OriginalColor;
+    _originalColorImage.color = changeColorEditAction.OriginalColor._color;
+    Text originalColorText = _originalColorImage.GetComponentInChildren<Text>();
+    if (originalColorText != null)
+    {
+      originalColorText.text = changeColorEditAction.OriginalColor._name;
+    }
 
     if (changeColorEditAction.ColorChoices.Length > _colorButtons.Length)
     {
@@ -45,10 +49,15 @@ public class PickColorMenu : BaseMenu
         _colorButtons[i].gameObject.SetActive(false);
         continue;
       }
-      _colorButtons[i].image.color = changeColorEditAction.ColorChoices[i];
+      _colorButtons[i].image.color = changeColorEditAction.ColorChoices[i]._color;
+      Text colorButtonText = _colorButtons[i].GetComponentInChildren<Text>();
+      if (colorButtonText != null)
+      {
+        colorButtonText.text = changeColorEditAction.ColorChoices[i]._name;
+      }
     }
   }
-  
+
   //protected methods
   //private methods
   //protected fields

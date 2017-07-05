@@ -13,8 +13,8 @@ public class VRDeviceManager : Singleton<VRDeviceManager>
   };
 
   public static String OCULUS_DEVICE = "Oculus Rift CV1";
-  public static String VIVE_DEVICE = "Vive MV";  
-  public static String OTHER_DEVICE = "OpenVR";  
+  public static String VIVE_DEVICE = "Vive MV";
+  public static String OTHER_DEVICE = "OpenVR";
 
   //===========================================================================
   public Camera GetCurrentDeviceCamera ()
@@ -65,11 +65,11 @@ public class VRDeviceManager : Singleton<VRDeviceManager>
       {
         _currentDevice = _otherDevice;
         Debug.Log("Other VR is Active: " + _otherDevice._device.activeSelf);
-      }      
+      }
     }
 
     //if we get here and current device still null (We don't have anything hooked up) then let's use the simulator
-    if(_currentDevice == null && _simulator != null)
+    if (_currentDevice == null && _simulator != null)
     {
       _currentDevice = _simulator;
     }
@@ -81,7 +81,7 @@ public class VRDeviceManager : Singleton<VRDeviceManager>
   }
 
   [SerializeField]
-  private VRDevice _oculusDevice = null;  
+  private VRDevice _oculusDevice = null;
 
   [SerializeField]
   private VRDevice _viveDevice = null;
@@ -98,8 +98,6 @@ public class VRDeviceManager : Singleton<VRDeviceManager>
   [SerializeField]
   private bool _useSimulator = false;
 
-  private VRDevice _currentDevice = null;  
+  private VRDevice _currentDevice = null;
   private List<VRDevice> _devices = new List<VRDevice>(5);
 }
-
-  

@@ -62,10 +62,10 @@ public class EditModeMenu : BaseMenu
   [SerializeField]
   private BaseMenu _pickMaterialMenu = null;
 
-  //JFR: TODO: need to implement these
   [SerializeField]
   private Button _removeButton = null;
 
+  //JFR: TODO: need to implement this
   [SerializeField]
   private Button _swapButton = null;
 

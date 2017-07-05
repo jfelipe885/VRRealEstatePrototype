@@ -54,7 +54,7 @@ public class MenuManager : Singleton<MenuManager>
     {
       menuCanvas.worldCamera = _camera;
     }
-}
+  }
 
   //public constants
   //===================================

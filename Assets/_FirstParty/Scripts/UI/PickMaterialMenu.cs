@@ -31,8 +31,13 @@ public class PickMaterialMenu : BaseMenu
       Debug.LogError("SetUpButtons(), _originalColorButton == null");
       return;
     }
-    _originalMaterialImage.material = changeMaterialEditAction.OriginalMaterial;
+    _originalMaterialImage.material = changeMaterialEditAction.OriginalMaterial._material;
     _originalMaterialImage.material.mainTextureScale = new Vector2(changeMaterialEditAction._buttonTilingX, changeMaterialEditAction._buttonTilingY);
+    Text originalMaterialText = _originalMaterialImage.GetComponentInChildren<Text>();
+    if (originalMaterialText != null)
+    {
+      originalMaterialText.text = changeMaterialEditAction.OriginalMaterial._name;
+    }
 
     if (changeMaterialEditAction.MaterialChoicesCopies.Length > _materialButtons.Length)
     {
@@ -46,8 +51,14 @@ public class PickMaterialMenu : BaseMenu
         _materialButtons[i].gameObject.SetActive(false);
         continue;
       }
-      _materialButtons[i].image.material = changeMaterialEditAction.MaterialChoicesCopies[i];
+      _materialButtons[i].image.material = changeMaterialEditAction.MaterialChoicesCopies[i]._material;
       _materialButtons[i].image.material.mainTextureScale = new Vector2(changeMaterialEditAction._buttonTilingX, changeMaterialEditAction._buttonTilingY);
+
+      Text materialText = _materialButtons[i].GetComponentInChildren<Text>();
+      if (materialText != null)
+      {
+        materialText.text = changeMaterialEditAction.MaterialChoicesCopies[i]._name;
+      }
     }
   }
 

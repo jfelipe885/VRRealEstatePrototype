@@ -34,22 +34,22 @@ public class ControllerGrabObject : MonoBehaviour
     get { return SteamVR_Controller.Input((int)trackedObj.index); }
   }
 
-  private void Awake()
+  private void Awake ()
   {
     trackedObj = GetComponent<SteamVR_TrackedObject>();
   }
 
-  public void OnTriggerEnter(Collider other)
+  public void OnTriggerEnter (Collider other)
   {
     SetCollidingObject(other);
   }
 
-  public void OnTriggerStay(Collider other)
+  public void OnTriggerStay (Collider other)
   {
     SetCollidingObject(other);
   }
 
-  public void OnTriggerExit(Collider other)
+  public void OnTriggerExit (Collider other)
   {
     if (!collidingObject)
     {
@@ -59,7 +59,7 @@ public class ControllerGrabObject : MonoBehaviour
     collidingObject = null;
   }
 
-  private void SetCollidingObject(Collider col)
+  private void SetCollidingObject (Collider col)
   {
     if (collidingObject || !col.GetComponent<Rigidbody>())
     {
@@ -69,7 +69,7 @@ public class ControllerGrabObject : MonoBehaviour
     collidingObject = col.gameObject;
   }
 
-  private void Update()
+  private void Update ()
   {
     if (Controller.GetHairTriggerDown())
     {
@@ -88,7 +88,7 @@ public class ControllerGrabObject : MonoBehaviour
     }
   }
 
-  private void GrabObject()
+  private void GrabObject ()
   {
     objectInHand = collidingObject;
     collidingObject = null;
@@ -96,7 +96,7 @@ public class ControllerGrabObject : MonoBehaviour
     joint.connectedBody = objectInHand.GetComponent<Rigidbody>();
   }
 
-  private FixedJoint AddFixedJoint()
+  private FixedJoint AddFixedJoint ()
   {
     FixedJoint fx = gameObject.AddComponent<FixedJoint>();
     fx.breakForce = 20000;
@@ -104,7 +104,7 @@ public class ControllerGrabObject : MonoBehaviour
     return fx;
   }
 
-  private void ReleaseObject()
+  private void ReleaseObject ()
   {
     if (GetComponent<FixedJoint>())
     {

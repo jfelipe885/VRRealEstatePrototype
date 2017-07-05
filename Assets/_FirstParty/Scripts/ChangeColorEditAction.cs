@@ -1,16 +1,24 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class ChangeColorEditAction : BaseEditAction
 {
+  [Serializable]
+  public class ColorChoice
+  {
+    public Color _color;
+    public String _name;
+  }
+
   //===================================
-  public Color[] ColorChoices
+  public ColorChoice[] ColorChoices
   {
     get { return _colorChoices; }
     set { _colorChoices = value; }
   }
 
   //===================================
-  public Color OriginalColor
+  public ColorChoice OriginalColor
   {
     get { return _originalColor; }
     set { _originalColor = value; }
@@ -25,11 +33,13 @@ public class ChangeColorEditAction : BaseEditAction
       Debug.LogError("ChangeColorEditAction.Start (), interactableObject == null");
     }
 
-    OriginalColor = interactableObject.OriginalColor;
+    OriginalColor._color = interactableObject.OriginalColor;
+    //JFR: TODO: localize this string
+    OriginalColor._name = "Original";
   }
 
   [SerializeField]
-  private Color[] _colorChoices = null;
+  private ColorChoice[] _colorChoices = null;
 
-  private Color _originalColor = new Color();
+  private ColorChoice _originalColor = new ColorChoice();
 }

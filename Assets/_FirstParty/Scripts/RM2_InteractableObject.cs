@@ -107,13 +107,8 @@ public class RM2_InteractableObject : VRTK_InteractableObject
   //protected fields
 
   //private fields
-
-  [SerializeField]
-  private EditModeActions[] _editModeActions = null;
-
   private bool _forceHightlight = false;
 
   private Color _originalColor = new Color();
-
   private Material _originalMaterialCopy = null;
 }

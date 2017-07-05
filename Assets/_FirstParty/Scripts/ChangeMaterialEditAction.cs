@@ -1,16 +1,24 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class ChangeMaterialEditAction : BaseEditAction
 {
+  [Serializable]
+  public class MaterialChoice
+  {
+    public Material _material = null;
+    public String _name;
+  }
+
   //===================================
-  public Material[] MaterialChoicesCopies
+  public MaterialChoice[] MaterialChoicesCopies
   {
     get { return _materialChoicesCopies; }
     set { _materialChoicesCopies = value; }
   }
 
   //===================================
-  public Material OriginalMaterial
+  public MaterialChoice OriginalMaterial
   {
     get { return _originalMaterial; }
     set { _originalMaterial = value; }
@@ -25,20 +33,22 @@ public class ChangeMaterialEditAction : BaseEditAction
       Debug.LogError("ChangeMaterialEditAction.Start (), interactableObject == null");
     }
 
-    OriginalMaterial = new Material(interactableObject.OriginalMaterialCopy);
+    OriginalMaterial = new MaterialChoice();
+    OriginalMaterial._material = new Material(interactableObject.OriginalMaterialCopy);
+    OriginalMaterial._name = "Original";
 
-    _materialChoicesCopies = new Material[_materialChoices.Length];
+    _materialChoicesCopies = new MaterialChoice[_materialChoices.Length];
 
     for (int i = 0; i < _materialChoices.Length; i++)
     {
-      _materialChoicesCopies[i] = new Material(_materialChoices[i]);
+      _materialChoicesCopies[i] = new MaterialChoice();
+      _materialChoicesCopies[i]._material = new Material(_materialChoices[i]._material);
+      _materialChoicesCopies[i]._name = _materialChoices[i]._name;
     }
   }
 
   [SerializeField]
-  private Material[] _materialChoices = null;
-
-  private Material[] _materialChoicesCopies = null;
+  private MaterialChoice[] _materialChoices = null;
 
   [SerializeField]
   public float _buttonTilingX = 1.0f;
@@ -46,5 +56,6 @@ public class ChangeMaterialEditAction : BaseEditAction
   [SerializeField]
   public float _buttonTilingY = 1.0f;
 
-  private Material _originalMaterial = null;
+  private MaterialChoice[] _materialChoicesCopies = null;
+  private MaterialChoice _originalMaterial = null;
 }
