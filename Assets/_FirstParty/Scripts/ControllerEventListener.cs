@@ -127,7 +127,7 @@ public class ControllerEventListener : MonoBehaviour
     //lock interactable
     if (MenuManager.Instance.CurrentMenusLockInteractable() && MenuManager.Instance.TouchedInteractableObject != null)
     {
-      RM2_InteractableObject interactable =  MenuManager.Instance.TouchedInteractableObject.GetComponent<RM2_InteractableObject>();
+      RM2_InteractableObject interactable = MenuManager.Instance.TouchedInteractableObject.GetComponent<RM2_InteractableObject>();
       if (interactable != null)
       {
         MenuManager.Instance.LockedInteractableObject = interactable.gameObject;

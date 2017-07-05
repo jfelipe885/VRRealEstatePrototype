@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ChangeMaterialEditAction : BaseEditAction
 {
@@ -34,7 +32,7 @@ public class ChangeMaterialEditAction : BaseEditAction
     for (int i = 0; i < _materialChoices.Length; i++)
     {
       _materialChoicesCopies[i] = new Material(_materialChoices[i]);
-    }    
+    }
   }
 
   [SerializeField]
@@ -49,6 +47,4 @@ public class ChangeMaterialEditAction : BaseEditAction
   public float _buttonTilingY = 1.0f;
 
   private Material _originalMaterial = null;
-
-
 }

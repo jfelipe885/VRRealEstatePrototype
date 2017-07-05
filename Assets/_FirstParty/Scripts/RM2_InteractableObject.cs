@@ -106,7 +106,7 @@ public class RM2_InteractableObject : VRTK_InteractableObject
   //private methods
   //protected fields
 
-  //private fields  
+  //private fields
 
   [SerializeField]
   private EditModeActions[] _editModeActions = null;

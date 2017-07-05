@@ -26,7 +26,35 @@ public class MenuManager : Singleton<MenuManager>
   {
     EnterMenuMode(MenuMode.InGameMenu);
     PushMenu(_inGameMenu);
-  }
+
+    _camera = VRDeviceManager.Instance.GetCurrentDeviceCamera();
+
+    Canvas menuCanvas = _inGameMenu.GetComponent<Canvas>();
+    if (menuCanvas != null)
+    {
+      menuCanvas.worldCamera = _camera;
+    }
+    menuCanvas = _editMenu.GetComponent<Canvas>();
+    if (menuCanvas != null)
+    {
+      menuCanvas.worldCamera = _camera;
+    }
+    menuCanvas = _editMenuNothingTouched.GetComponent<Canvas>();
+    if (menuCanvas != null)
+    {
+      menuCanvas.worldCamera = _camera;
+    }
+    menuCanvas = _addFurnitureMenu.GetComponent<Canvas>();
+    if (menuCanvas != null)
+    {
+      menuCanvas.worldCamera = _camera;
+    }
+    menuCanvas = _hudCanvas;
+    if (menuCanvas != null)
+    {
+      menuCanvas.worldCamera = _camera;
+    }
+}
 
   //public constants
   //===================================
@@ -131,11 +159,10 @@ public class MenuManager : Singleton<MenuManager>
         break;
     }
 
-
-    RM2_InteractableObject interactable = (TouchedInteractableObject == null) ? 
+    RM2_InteractableObject interactable = (TouchedInteractableObject == null) ?
       ((LockedInteractableObject == null) ? null : LockedInteractableObject.GetComponent<RM2_InteractableObject>())
       : TouchedInteractableObject.GetComponent<RM2_InteractableObject>();
-    topMenu.SetUpButtons(interactable);    
+    topMenu.SetUpButtons(interactable);
     topMenu.gameObject.SetActive(true);
   }
 
@@ -246,7 +273,7 @@ public class MenuManager : Singleton<MenuManager>
   //===========================================================================
   public void InFrontTouchedInteractableTransform (Transform menuTransform)
   {
-    InFrontInteractable(menuTransform, _touchedInteractableObject);    
+    InFrontInteractable(menuTransform, _touchedInteractableObject);
   }
 
   //===========================================================================
@@ -278,7 +305,7 @@ public class MenuManager : Singleton<MenuManager>
     //let's set up the menu along the vector between the camera and the object
     Vector3 vectorForMenuDisplay = (interactable.transform.position - _camera.transform.position);
     float distanceToInteractable = (vectorForMenuDisplay * _distanceMenuToInteractableFactor).magnitude;
-    distanceToInteractable =  Mathf.Clamp(distanceToInteractable, _minDistanceToInteractable, _maxDistanceToInteractable);
+    distanceToInteractable = Mathf.Clamp(distanceToInteractable, _minDistanceToInteractable, _maxDistanceToInteractable);
     menuTransform.position = _camera.transform.position + vectorForMenuDisplay.normalized * distanceToInteractable;
     menuTransform.LookAt(interactable.transform.position);
   }
@@ -378,7 +405,7 @@ public class MenuManager : Singleton<MenuManager>
   private BaseMenu _addFurnitureMenu = null;
 
   [SerializeField]
-  private GameObject _camera = null;
+  private Canvas _hudCanvas = null;
 
   [SerializeField]
   private VRTK_InteractTouch _interactTouch = null;
@@ -394,6 +421,7 @@ public class MenuManager : Singleton<MenuManager>
 
   [SerializeField]
   private float _maxDistanceToInteractable = 0.75f; //Meters
+
   [SerializeField]
   private float _minDistanceToInteractable = 0.1f; //Meters
 
@@ -402,7 +430,7 @@ public class MenuManager : Singleton<MenuManager>
 
   [SerializeField]
   private VRTK_Pointer _intearctPointer = null;
-  
+
   //Object that our pointer is currently touching.
   private GameObject _touchedInteractableObject = null;
 
@@ -416,4 +444,6 @@ public class MenuManager : Singleton<MenuManager>
   private Stack<BaseMenu> _menuStack = new Stack<BaseMenu>(10);
 
   private Transform _currentTransform = null;
+
+  private Camera _camera = null;
 }

@@ -3,41 +3,39 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.VR;
 
-public class VRDeviceManager : MonoBehaviour
+public class VRDeviceManager : Singleton<VRDeviceManager>
 {
-  [SerializeField]
-  private GameObject _oculusDevice = null;
-
-  [SerializeField]
-  private GameObject _viveDevice = null;
-
-  [SerializeField]
-  private GameObject _gearVrDevice = null;
-
-  [SerializeField]
-  private GameObject _otherDevice = null;
-
-  //[SerializeField]
-  private GameObject _cameraRig = null;
-
-  private List<GameObject> _devices = new List<GameObject>(4);
+  [Serializable]
+  public class VRDevice
+  {
+    public GameObject _device;
+    public Camera _camera;
+  };
 
   public static String OCULUS_DEVICE = "Oculus Rift CV1";
-  public static String VIVE_DEVICE = "Vive MV";
-  public static String OTHER_DEVICE = "OpenVR";
+  public static String VIVE_DEVICE = "Vive MV";  
+  public static String OTHER_DEVICE = "OpenVR";  
 
-  // Use this for initialization
-  private void Start()
+  //===========================================================================
+  public Camera GetCurrentDeviceCamera ()
+  {
+    return _currentDevice._camera;
+  }
+
+  //===========================================================================
+  private void Awake ()
   {
     _devices.Add(_oculusDevice);
     _devices.Add(_viveDevice);
     _devices.Add(_gearVrDevice);
     _devices.Add(_otherDevice);
-    foreach (GameObject gameObject in _devices)
+    _devices.Add(_simulator);
+
+    foreach (VRDevice vrDevice in _devices)
     {
-      if (gameObject != null)
+      if (vrDevice != null && vrDevice._device != null)
       {
-        gameObject.SetActive(false);
+        vrDevice._device.SetActive(false);
       }
     }
 
@@ -46,31 +44,62 @@ public class VRDeviceManager : MonoBehaviour
       Debug.Log("Device: " + s);
     }
 
-    Debug.Log("***Device: " + UnityEngine.VR.VRDevice.model);
-    if (String.Compare(UnityEngine.VR.VRDevice.model, OCULUS_DEVICE) == 0)
+    if (_useSimulator == true && _simulator != null)
     {
-      _cameraRig = _oculusDevice;
-      Debug.Log("Oculus is Active: " + _oculusDevice.activeSelf);
+      _currentDevice = _simulator;
     }
-    else if (String.Compare(UnityEngine.VR.VRDevice.model, VIVE_DEVICE) == 0)
+    else
     {
-      _cameraRig = _viveDevice;
-      Debug.Log("Vive is Active: " + _viveDevice.activeSelf);
-    }
-    else if (String.Compare(UnityEngine.VR.VRDevice.model, OTHER_DEVICE) == 0)
-    {
-      _cameraRig = _otherDevice;
-      Debug.Log("Other VR is Active: " + _otherDevice.activeSelf);
+      Debug.Log("***Device: " + UnityEngine.VR.VRDevice.model);
+      if (String.Compare(UnityEngine.VR.VRDevice.model, OCULUS_DEVICE) == 0)
+      {
+        _currentDevice = _oculusDevice;
+        Debug.Log("Oculus is Active: " + _oculusDevice._device.activeSelf);
+      }
+      else if (String.Compare(UnityEngine.VR.VRDevice.model, VIVE_DEVICE) == 0)
+      {
+        _currentDevice = _viveDevice;
+        Debug.Log("Vive is Active: " + _viveDevice._device.activeSelf);
+      }
+      else if (String.Compare(UnityEngine.VR.VRDevice.model, OTHER_DEVICE) == 0)
+      {
+        _currentDevice = _otherDevice;
+        Debug.Log("Other VR is Active: " + _otherDevice._device.activeSelf);
+      }      
     }
 
-    if (_cameraRig != null)
+    //if we get here and current device still null (We don't have anything hooked up) then let's use the simulator
+    if(_currentDevice == null && _simulator != null)
     {
-      _cameraRig.SetActive(true);
+      _currentDevice = _simulator;
+    }
+
+    if (_currentDevice != null)
+    {
+      _currentDevice._device.SetActive(true);
     }
   }
 
-  // Update is called once per frame
-  //private void Update()
-  //{
-  //}
+  [SerializeField]
+  private VRDevice _oculusDevice = null;  
+
+  [SerializeField]
+  private VRDevice _viveDevice = null;
+
+  [SerializeField]
+  private VRDevice _gearVrDevice = null;
+
+  [SerializeField]
+  private VRDevice _simulator = null;
+
+  [SerializeField]
+  private VRDevice _otherDevice = null;
+
+  [SerializeField]
+  private bool _useSimulator = false;
+
+  private VRDevice _currentDevice = null;  
+  private List<VRDevice> _devices = new List<VRDevice>(5);
 }
+
+  
