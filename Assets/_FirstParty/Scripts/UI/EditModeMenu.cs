@@ -25,6 +25,13 @@ public class EditModeMenu : BaseMenu
   }
 
   //===========================================================================
+  public void ShowSwapObject ()
+  {
+    MenuManager.Instance.PushMenu(_swapObjectMenu);
+    MenuManager.Instance.ShowTopMenu();
+  }
+
+  //===========================================================================
   public override void SetUpButtons (RM2_InteractableObject interactable)
   {
     if (interactable == null)
@@ -34,6 +41,7 @@ public class EditModeMenu : BaseMenu
 
     SetUpButton<ChangeColorEditAction>(interactable, _colorButton);
     SetUpButton<ChangeMaterialEditAction>(interactable, _materialButton);
+    SetUpButton<SwapObjectEditAction>(interactable, _swapButton);
     SetUpButton<RemoveObjectEditAction>(interactable, _removeButton);
     SetUpButton<OnOffEditAction>(interactable, _onOffButton);
   }
@@ -63,9 +71,11 @@ public class EditModeMenu : BaseMenu
   private BaseMenu _pickMaterialMenu = null;
 
   [SerializeField]
-  private Button _removeButton = null;
+  private BaseMenu _swapObjectMenu = null;
 
-  //JFR: TODO: need to implement this
+  [SerializeField]
+  private Button _removeButton = null;
+  
   [SerializeField]
   private Button _swapButton = null;
 

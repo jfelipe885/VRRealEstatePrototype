@@ -84,9 +84,33 @@ public class RM2_InteractableObject : VRTK_InteractableObject
   }
 
   //===========================================================================
+  public void SwapObject (GameObject newObjectInstance)
+  {
+    if (newObjectInstance == null)
+    {
+      return;
+    }
+    newObjectInstance.transform.parent = transform.parent;
+    MathHelper.CopyTransform(newObjectInstance.transform, transform);
+    Destroy(gameObject);
+  }
+
+  //===========================================================================
+  public void SetUpforUI ()
+  {
+    Collider objectCollider = GetComponent<Collider>();
+    if (objectCollider != null)
+    {
+      objectCollider.enabled = false;
+    }
+
+    base.ToggleHighlight(false);
+  }
+
+  //===========================================================================
   public override void ToggleHighlight (bool toggle)
   {
-    //TODO: JFR: this seems pretty hacky. we might find a better way to do this later. or at least get rid of the MenuManager here
+    //TODO: JFR: this seems pretty hacky.we might find a better way to do this later.or at least get rid of the MenuManager here
     if (MenuManager.Instance.LockedInteractableObject != null)
     {
       if (MenuManager.Instance.LockedInteractableObject != this.gameObject)

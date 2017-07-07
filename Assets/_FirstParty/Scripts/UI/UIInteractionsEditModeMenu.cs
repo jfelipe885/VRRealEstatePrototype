@@ -41,6 +41,12 @@ public class UIInteractionsEditModeMenu : MonoBehaviour
   //===========================================================================
   public void OnButtonSwap ()
   {
+    if (MenuManager.Instance.EditMenu == null)
+    {
+      return;
+    }
+
+    MenuManager.Instance.EditMenu.ShowSwapObject();
   }
 
   //===========================================================================
