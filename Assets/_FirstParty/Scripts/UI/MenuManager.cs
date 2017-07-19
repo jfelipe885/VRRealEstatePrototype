@@ -24,6 +24,9 @@ public class MenuManager : Singleton<MenuManager>
   //===========================================================================
   public void Start ()
   {
+    Debug.Log("***MenuMode.InGameMenu:"+ MenuMode.InGameMenu);
+    Debug.Log("***camera:" + VRDeviceManager.Instance.GetCurrentDeviceCamera());
+    Debug.Log("***inGameMenu.GetComponent<Canvas>():" + _inGameMenu.GetComponent<Canvas>());
     EnterMenuMode(MenuMode.InGameMenu);
     PushMenu(_inGameMenu);
 
